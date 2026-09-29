@@ -1,0 +1,21 @@
+{
+  "name": "bundlepather",
+  "version": "0.0.1",
+  "description": "BundlePather for OpenLogicArrows 1.4",
+  "author": "TerraMain",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "bundle_main": "node src/bundle_main.js",
+    "shell_main": "node src/shell_main.js",
+    "all_main": "node src/shell_main.js && node src/bundle_main.js"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.29.9",
+    "@babel/traverse": "^8.0.6",
+    "espree": "^11.2.0",
+    "esquery": "^1.7.0",
+    "prettier": "^3.9.9",
+    "yaml": "^2.9.1"
+  }
+}

@@ -1,0 +1,31 @@
+{
+    "name": "Open Logic-Arrows",
+    "description": "open modloader for Logic-Arrows",
+    "version": "2.4.0",
+    "manifest_version": 3,
+    "icons": {
+        "256": "logo.png"
+    },
+    "permissions": [
+        "declarativeNetRequest",
+        "scripting"
+    ],
+    "host_permissions": [
+        "*://*.logic-arrows.io/*"
+    ],
+    "declarative_net_request" : {
+        "rule_resources" : [
+            {
+                "id": "ruleset_1",
+                "enabled": true,
+                "path": "rule.json"
+            }
+        ]
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [ "scripts/bundle.js", "scripts/shell.js" ],
+            "matches": [ "*://*.logic-arrows.io/*" ]
+        }
+    ]
+}

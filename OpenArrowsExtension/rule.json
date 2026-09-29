@@ -1,0 +1,48 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "responseHeaders": [
+        {
+          "header": "content-type",
+          "operation": "set",
+          "value": "text/html" 
+        },
+        {
+          "header": "service-worker-allowed",
+          "operation": "remove"
+        }
+      ]
+    },
+    "condition": {
+      "urlFilter": "logic-arrows.io/sw.js",
+      "resourceTypes": ["other", "main_frame", "sub_frame", "script"]
+    }
+  },
+  {
+    "id": 2,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": { "extensionPath": "/scripts/shell.js" }
+    },
+    "condition": {
+      "urlFilter": "logic-arrows.io/bundle-shell.js*",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 3,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": { "extensionPath": "/scripts/bundle.js" }
+    },
+    "condition": {
+      "urlFilter": "logic-arrows.io/open_bundle.js",
+      "resourceTypes": ["script"]
+    }
+  }
+]

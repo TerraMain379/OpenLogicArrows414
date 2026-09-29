@@ -1,0 +1,4 @@
+node_modules/
+package-lock.json
+OpenArrowsExtension/_metadata
+BundlePather/cache

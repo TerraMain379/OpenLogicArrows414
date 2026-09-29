@@ -1,0 +1,33 @@
+modules:
+  LevelsControls:
+    - path: "AssignmentExpression[left.property.name='LevelsControls']"
+      map:
+        - path: "ClassMethod[key.name='constructor'] > Identifier[name='e']"
+          rename: TODO_e
+        - path: "ClassMethod[key.name='constructor'] > Identifier[name='t']"
+          rename: game
+        
+        - path: "ClassMethod[key.name='update']"
+          map:
+            - path: "Identifier[name='e']"
+              rename: mousePos
+            - path: "IfStatement Identifier[name='t']"
+              rename: TODO_t
+            - path: "Identifier[name='t']"
+              rename: chunkX
+            - path: "Identifier[name='s']"
+              rename: chunkY
+            - path: "Identifier[name='i']"
+              rename: intChunkX
+            - path: "Identifier[name='a']"
+              rename: intChunkY
+        - path: "ClassMethod[key.name='moveCamera']"
+          map:
+            - path: "Identifier[name='e']"
+              rename: mouseX
+            - path: "Identifier[name='t']"
+              rename: mouseY
+        - path: "ClassProperty[key.name='wheelCallback']"
+          map:
+            - path: "Identifier[name='e']"
+              rename: deltaDelta
