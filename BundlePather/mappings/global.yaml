@@ -1,33 +1,1725 @@
 modules:
+  ChunkConsts:
+    - {path: "AssignmentExpression[left.property.name='CELL_SIZE']", rename: "CELL_SIZE"}
+    - {path: "AssignmentExpression[left.property.name='CHUNK_SIZE']", rename: "CHUNK_SIZE"}
+    - {path: "AssignmentExpression[left.property.name='CHUNK_AREA']", rename: "CHUNK_AREA"}
+
   LevelsControls:
-    - path: "AssignmentExpression[left.property.name='LevelsControls']"
-      map:
-        - path: "ClassMethod[key.name='constructor'] > Identifier[name='e']"
-          rename: TODO_e
-        - path: "ClassMethod[key.name='constructor'] > Identifier[name='t']"
-          rename: game
-        
-        - path: "ClassMethod[key.name='update']"
-          map:
-            - path: "Identifier[name='e']"
-              rename: mousePos
-            - path: "IfStatement Identifier[name='t']"
-              rename: TODO_t
-            - path: "Identifier[name='t']"
-              rename: chunkX
-            - path: "Identifier[name='s']"
-              rename: chunkY
-            - path: "Identifier[name='i']"
-              rename: intChunkX
-            - path: "Identifier[name='a']"
-              rename: intChunkY
-        - path: "ClassMethod[key.name='moveCamera']"
-          map:
-            - path: "Identifier[name='e']"
-              rename: mouseX
-            - path: "Identifier[name='t']"
-              rename: mouseY
-        - path: "ClassProperty[key.name='wheelCallback']"
-          map:
-            - path: "Identifier[name='e']"
-              rename: deltaDelta
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "canvas"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "game"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='e'] > Identifier", rename: "mousePos"}
+    - {path: "ClassMethod[key.name='update'] IfStatement VariableDeclaration > VariableDeclarator[id.name='t'] > Identifier", rename: "newScale"}
+    - {path: "ClassMethod[key.name='update'] > BlockStatement > VariableDeclaration > VariableDeclarator[id.name='t'] > Identifier", rename: "cursorX"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='s'] > Identifier", rename: "cursorY"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='i'] > Identifier", rename: "cellX"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='a'] > Identifier", rename: "cellY"}
+    - {path: "ClassMethod[key.name='moveCamera'] > Identifier[name='e']", rename: "mouseX"}
+    - {path: "ClassMethod[key.name='moveCamera'] > Identifier[name='t']", rename: "mouseY"}
+    - {path: "ClassProperty[key.name='wheelCallback'] ArrowFunctionExpression > Identifier[name='e']", rename: "deltaY"}
+
+  LevelInfo:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "id"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "nextLevels"}
+    - {path: "ClassMethod[key.name='setState'] > Identifier[name='e']", rename: "state"}
+    - {path: "ClassMethod[key.name='setCallback'] > Identifier[name='e']", rename: "callback"}
+
+  UILevelPlayButton:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "onClick"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='s'] > Identifier", rename: "iconImg"}
+
+  RenderTexture:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "gl"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "width"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "height"}
+    - {path: "ClassMethod[key.name='constructor'] > AssignmentPattern[left.name='i'] > Identifier", rename: "options"}
+    - {path: "ClassMethod[key.name='constructor'] ObjectProperty[key.name='filtering'] AssignmentPattern > Identifier", rename: "filtering"}
+    - {path: "ClassMethod[key.name='constructor'] ObjectProperty[key.name='hdr'] AssignmentPattern > Identifier", rename: "hdr"}
+    - {path: "ClassMethod[key.name='constructor'] ObjectProperty[key.name='mipmaps'] AssignmentPattern > Identifier", rename: "mipmaps"}
+    - {path: "ClassMethod[key.name='constructor'] ObjectProperty[key.name='mipmapLevels'] > Identifier", rename: "mipmapLevels"}
+    - {path: "ClassMethod[key.name='createTexture'] VariableDeclarator[id.name='e'] > Identifier", rename: "texture"}
+    - {path: "ClassMethod[key.name='createTexture'] VariableDeclarator[id.name='t'] > Identifier", rename: "internalFormat"}
+    - {path: "ClassMethod[key.name='createTexture'] VariableDeclarator[id.name='s'] > Identifier", rename: "pixelType"}
+    - {path: "ClassMethod[key.name='createFramebuffer'] VariableDeclarator[id.name='e'] > Identifier", rename: "framebuffer"}
+    - {path: "ClassMethod[key.name='setMipmapLevels'] > Identifier[name='e']", rename: "maxLevels"}
+    - {path: "ClassMethod[key.name='getMinFiltering'] VariableDeclarator[id.name='e'] > Identifier", rename: "gl"}
+    - {path: "ClassMethod[key.name='getMagFiltering'] VariableDeclarator[id.name='e'] > Identifier", rename: "gl"}
+
+  UIArrowInfo:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "arrowType"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='s'] > Identifier", rename: "leftDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='a'] > Identifier", rename: "arrowImg"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='n'] > Identifier", rename: "infoDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='r'] > Identifier", rename: "nameDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='l'] > Identifier", rename: "activatesTitleDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='h'] > Identifier", rename: "activationDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='c'] > Identifier", rename: "colorRegex"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='d'] > Identifier", rename: "activationText"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='u'] > Identifier", rename: "onActivationTitleDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='g'] > Identifier", rename: "actionDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='m'] > Identifier", rename: "actionText"}
+    - {path: "ClassProperty[key.name='replaceInlineColors'] ArrowFunctionExpression > Identifier[name='e']", rename: "match"}
+    - {path: "ClassProperty[key.name='replaceInlineColors'] VariableDeclarator[id.name='t'] > Identifier", rename: "colorMatch"}
+    - {path: "ClassProperty[key.name='replaceInlineColors'] VariableDeclarator[id.name='s'] > Identifier", rename: "colorCode"}
+    - {path: "ClassProperty[key.name='replaceInlineColors'] VariableDeclarator[id.name='i'] > Identifier", rename: "color"}
+    - {path: "ClassProperty[key.name='replaceInlineColors'] VariableDeclarator[id.name='o'] > Identifier", rename: "textMatch"}
+
+  UIControlsHint:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "rights"}
+    - {path: "ClassMethod[key.name='updateRights'] > Identifier[name='e']", rename: "rights"}
+    - {path: "ClassMethod[key.name='setState'] > Identifier[name='e']", rename: "state"}
+    - {path: "ClassMethod[key.name='showFreeCursorHint'] VariableDeclarator[id.name='e'] > Identifier", rename: "html"}
+    - {path: "ClassMethod[key.name='showArrowCursorHint'] VariableDeclarator[id.name='e'] > Identifier", rename: "html"}
+    - {path: "ClassMethod[key.name='showSelectedHint'] VariableDeclarator[id.name='e'] > Identifier", rename: "html"}
+    - {path: "ClassProperty[key.name='replaceInlineKeys'] ArrowFunctionExpression > Identifier[name='e']", rename: "keyText"}
+
+  AccountPage:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='t'] > Identifier", rename: "userNameDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='s'] > Identifier", rename: "logoutDiv"}
+
+  MouseHandler:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "element"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "leftClickCallback"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "rightClickCallback"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='i']", rename: "wheelCallback"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='o']", rename: "twoFingerCallback"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='a']", rename: "rotateCallback"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='n']", rename: "multitouchPanCallback"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='r']", rename: "longPressCallback"}
+    - {path: "ClassMethod[key.name='resize'] > Identifier[name='e']", rename: "rect"}
+    - {path: "ClassMethod[key.name='startLongPressTimer'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='startLongPressTimer'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='getTouchDistance'] > Identifier[name='e']", rename: "touch1"}
+    - {path: "ClassMethod[key.name='getTouchDistance'] > Identifier[name='t']", rename: "touch2"}
+    - {path: "ClassMethod[key.name='getTouchDistance'] VariableDeclarator[id.name='s'] > Identifier", rename: "dx"}
+    - {path: "ClassMethod[key.name='getTouchDistance'] VariableDeclarator[id.name='i'] > Identifier", rename: "dy"}
+    - {path: "ClassMethod[key.name='getTouchAngle'] > Identifier[name='e']", rename: "touch1"}
+    - {path: "ClassMethod[key.name='getTouchAngle'] > Identifier[name='t']", rename: "touch2"}
+    - {path: "ClassMethod[key.name='getTouchAngle'] VariableDeclarator[id.name='s'] > Identifier", rename: "dx"}
+    - {path: "ClassMethod[key.name='getTouchAngle'] VariableDeclarator[id.name='i'] > Identifier", rename: "dy"}
+    - {path: "ClassMethod[key.name='getTouchCenter'] > Identifier[name='e']", rename: "touch1"}
+    - {path: "ClassMethod[key.name='getTouchCenter'] > Identifier[name='t']", rename: "touch2"}
+    - {path: "ClassProperty[key.name='mouseMove'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassProperty[key.name='mouseDown'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassProperty[key.name='mouseUp'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassProperty[key.name='wheel'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassProperty[key.name='leftClick'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassProperty[key.name='rightClick'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassProperty[key.name='touchMove'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassProperty[key.name='touchMove'] ForStatement[init.declarations.0.id.name='t'] VariableDeclarator[id.name='s'] > Identifier", rename: "touch"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.value=1] VariableDeclarator[id.name='t'] > Identifier", rename: "touch"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.value=1] VariableDeclarator[id.name='s'] > Identifier", rename: "x"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.value=1] VariableDeclarator[id.name='i'] > Identifier", rename: "y"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.value=2] VariableDeclarator[id.name='t'] > Identifier", rename: "touch1"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.value=2] VariableDeclarator[id.name='s'] > Identifier", rename: "touch2"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.value=2] VariableDeclarator[id.name='i'] > Identifier", rename: "distance"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.value=2] VariableDeclarator[id.name='o'] > Identifier", rename: "angle"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.value=2] BlockStatement ArrayPattern > Identifier[name='a']", rename: "centerX"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.value=2] BlockStatement ArrayPattern > Identifier[name='n']", rename: "centerY"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.value=2] BlockStatement VariableDeclarator[id.name='e'] > Identifier", rename: "scale"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.value=2] BlockStatement VariableDeclarator[id.name='t'] > Identifier", rename: "panX"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.value=2] BlockStatement VariableDeclarator[id.name='s'] > Identifier", rename: "panY"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.value=2] BlockStatement VariableDeclarator[id.name='r'] > Identifier", rename: "angleDelta"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.right.value=2] VariableDeclarator[id.name='t'] > Identifier", rename: "touch"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.right.value=2] VariableDeclarator[id.name='s'] > Identifier", rename: "x"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.right.value=2] VariableDeclarator[id.name='i'] > Identifier", rename: "y"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.right.value=2] VariableDeclarator[id.name='o'] > Identifier", rename: "deltaX"}
+    - {path: "ClassProperty[key.name='touchMove'] IfStatement[test.left.right.value=2] VariableDeclarator[id.name='a'] > Identifier", rename: "deltaY"}
+    - {path: "ClassProperty[key.name='touchStart'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassProperty[key.name='touchStart'] IfStatement[test.left.value=1] VariableDeclarator[id.name='t'] > Identifier", rename: "touch"}
+    - {path: "ClassProperty[key.name='touchStart'] IfStatement[test.left.value=2] VariableDeclarator[id.name='t'] > Identifier", rename: "touch1"}
+    - {path: "ClassProperty[key.name='touchStart'] IfStatement[test.left.value=2] VariableDeclarator[id.name='s'] > Identifier", rename: "touch2"}
+    - {path: "ClassProperty[key.name='touchStart'] IfStatement[test.left.value=2] ArrayPattern > Identifier[name='i']", rename: "centerX"}
+    - {path: "ClassProperty[key.name='touchStart'] IfStatement[test.left.value=2] ArrayPattern > Identifier[name='o']", rename: "centerY"}
+    - {path: "ClassProperty[key.name='touchEnd'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassProperty[key.name='touchEnd'] VariableDeclarator[id.name='t'] > Identifier", rename: "remainingIdentifiers"}
+    - {path: "ClassProperty[key.name='touchEnd'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "identifier"}
+    - {path: "ClassProperty[key.name='touchEnd'] ForOfStatement VariableDeclarator[id.name='e'] > Identifier", rename: "identifier"}
+
+  UIToolbarArrow:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "type"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='s'] > Identifier", rename: "iconImg"}
+    - {path: "ClassMethod[key.name='setCallback'] > Identifier[name='e']", rename: "callback"}
+    - {path: "ClassMethod[key.name='toggle'] > Identifier[name='e']", rename: "enabled"}
+
+  UIToolbarController:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "arrowGroups"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "playerAccess"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='s'] > Identifier", rename: "containerDiv"}
+    - {path: "ClassMethod[key.name='constructor'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='e']", rename: "group"}
+    - {path: "ClassMethod[key.name='setSelectCallback'] > Identifier[name='e']", rename: "selectCallback"}
+    - {path: "ClassMethod[key.name='setSelectCallback'] > Identifier[name='t']", rename: "cursorCallback"}
+    - {path: "ClassMethod[key.name='setSelectCallback'] > Identifier[name='s']", rename: "clearSelectionCallback"}
+    - {path: "ClassMethod[key.name='setSelectCallback'] ArrowFunctionExpression > Identifier[name='t']", rename: "arrowType"}
+    - {path: "ClassMethod[key.name='setSelectCallback'] ArrowFunctionExpression > Identifier[name='e']", rename: "toolId"}
+    - {path: "ClassMethod[key.name='setGroupByType'] > Identifier[name='e']", rename: "arrowType"}
+    - {path: "ClassMethod[key.name='switchToToolGroup'] > Identifier[name='e']", rename: "toolGroup"}
+    - {path: "ClassMethod[key.name='handleToggle'] > Identifier[name='e']", rename: "mode"}
+
+  Routes:
+    - {path: "FunctionDeclaration[id.name='s'] Identifier[name='e']:first-child", rename: "value"}
+    - {path: "FunctionDeclaration[id.name='t'] VariableDeclarator[id.name='e'] > Identifier", rename: "port"}
+    - {path: "AssignmentExpression[left.property.name='getMap'] FunctionExpression > Identifier[name='e']", rename: "mapId"}
+    - {path: "AssignmentExpression[left.property.name='getMap'] FunctionExpression > Identifier[name='i']", rename: "callback"}
+    - {path: "AssignmentExpression[left.property.name='getMap'] FunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='getMapGuest'] FunctionExpression > Identifier[name='e']", rename: "mapId"}
+    - {path: "AssignmentExpression[left.property.name='getMapGuest'] FunctionExpression > Identifier[name='i']", rename: "callback"}
+    - {path: "AssignmentExpression[left.property.name='getMapGuest'] FunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='getMaps'] FunctionExpression > Identifier[name='e']", rename: "ids"}
+    - {path: "AssignmentExpression[left.property.name='getMaps'] FunctionExpression VariableDeclarator[id.name='i'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='getMaps'] FunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "maps"}
+    - {path: "AssignmentExpression[left.property.name='getMapsInfo'] FunctionExpression VariableDeclarator[id.name='e'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='getMapsInfo'] FunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "mapInfo"}
+    - {path: "AssignmentExpression[left.property.name='saveMap'] FunctionExpression > Identifier[name='e']", rename: "mapId"}
+    - {path: "AssignmentExpression[left.property.name='saveMap'] FunctionExpression > Identifier[name='i']", rename: "data"}
+    - {path: "AssignmentExpression[left.property.name='saveMap'] FunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "payload"}
+    - {path: "AssignmentExpression[left.property.name='saveMap'] FunctionExpression VariableDeclarator[id.name='a'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='saveMapInfo'] FunctionExpression > Identifier[name='e']", rename: "mapInfo"}
+    - {path: "AssignmentExpression[left.property.name='saveMapInfo'] FunctionExpression > Identifier[name='i']", rename: "callback"}
+    - {path: "AssignmentExpression[left.property.name='saveMapInfo'] FunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "payload"}
+    - {path: "AssignmentExpression[left.property.name='saveMapInfo'] FunctionExpression VariableDeclarator[id.name='a'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='createMap'] FunctionExpression > Identifier[name='e']", rename: "callback"}
+    - {path: "AssignmentExpression[left.property.name='createMap'] FunctionExpression VariableDeclarator[id.name='i'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='deleteMap'] FunctionExpression > Identifier[name='e']", rename: "mapId"}
+    - {path: "AssignmentExpression[left.property.name='deleteMap'] FunctionExpression > Identifier[name='i']", rename: "callback"}
+    - {path: "AssignmentExpression[left.property.name='deleteMap'] FunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "payload"}
+    - {path: "AssignmentExpression[left.property.name='deleteMap'] FunctionExpression VariableDeclarator[id.name='a'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='checkUser'] FunctionExpression > Identifier[name='e']", rename: "onLoggedIn"}
+    - {path: "AssignmentExpression[left.property.name='checkUser'] FunctionExpression > Identifier[name='i']", rename: "onLoggedOut"}
+    - {path: "AssignmentExpression[left.property.name='checkUser'] FunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='checkUser'] FunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "userData"}
+    - {path: "AssignmentExpression[left.property.name='checkConnection'] FunctionExpression VariableDeclarator[id.name='e'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='checkNameChange'] FunctionExpression VariableDeclarator[id.name='e'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='logout'] FunctionExpression VariableDeclarator[id.name='e'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='setName'] FunctionExpression > Identifier[name='e']", rename: "name"}
+    - {path: "AssignmentExpression[left.property.name='setName'] FunctionExpression VariableDeclarator[id.name='i'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='getLevels'] FunctionExpression VariableDeclarator[id.name='e'] > Identifier", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='completeLevel'] FunctionExpression > Identifier[name='e']", rename: "levelId"}
+    - {path: "AssignmentExpression[left.property.name='completeLevel'] FunctionExpression VariableDeclarator[id.name='i'] > Identifier", rename: "url"}
+
+  MapsPage:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "onMapClick"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "parent"}
+    - {path: "ClassMethod[key.name='addNewMapButton'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='addNewMapButton'] > Identifier[name='t']", rename: "onMapCreated"}
+    - {path: "ClassMethod[key.name='loadMaps'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='loadMaps'] > Identifier[name='t']", rename: "onMapClick"}
+    - {path: "ClassMethod[key.name='loadMaps'] VariableDeclarator[id.name='s'] > Identifier", rename: "mapsInfo"}
+    - {path: "ClassMethod[key.name='loadMaps'] VariableDeclarator[id.name='i'] > Identifier", rename: "cachePromises"}
+    - {path: "ClassMethod[key.name='loadMaps'] VariableDeclarator[id.name='o'] > Identifier", rename: "cachedDataList"}
+    - {path: "ClassMethod[key.name='loadMaps'] VariableDeclarator[id.name='n'] > Identifier", rename: "uncachedIds"}
+    - {path: "ClassMethod[key.name='loadMaps'] ForStatement[init.declarations.0.id.name='e'] VariableDeclarator[id.name='t'] > Identifier", rename: "mapInfo"}
+    - {path: "ClassMethod[key.name='loadMaps'] ForStatement[init.declarations.0.id.name='i'] VariableDeclarator[id.name='r'] > Identifier", rename: "mapInfo"}
+    - {path: "ClassMethod[key.name='loadMaps'] ForStatement[init.declarations.0.id.name='i'] VariableDeclarator[id.name='l'] > Identifier", rename: "cachedData"}
+    - {path: "ClassMethod[key.name='loadMaps'] ForStatement[init.declarations.0.id.name='s'] VariableDeclarator[id.name='i'] > Identifier", rename: "map"}
+    - {path: "ClassMethod[key.name='getCachedMapData'] > Identifier[name='e']", rename: "mapId"}
+    - {path: "ClassMethod[key.name='getCachedMapData'] > Identifier[name='t']", rename: "version"}
+    - {path: "ClassMethod[key.name='getCachedMapData'] VariableDeclarator[id.name='s'] > Identifier", rename: "cached"}
+    - {path: "ClassMethod[key.name='getCachedMapData'] VariableDeclarator[id.name='e'] > Identifier", rename: "cachedVersion"}
+    - {path: "ClassMethod[key.name='cacheMapData'] > Identifier[name='e']", rename: "map"}
+
+  ArrowsDB:
+    - {path: "FunctionDeclaration[id.name='s'] Identifier[name='e']:first-child", rename: "ensureStore"}
+    - {path: "FunctionDeclaration[id.name='t'] > Identifier[name='e']", rename: "openRequest"}
+    - {path: "FunctionDeclaration[id.name='t'] > Identifier[name='t']", rename: "storeName"}
+    - {path: "VariableDeclarator[id.name='s'] > Identifier[name='s']", rename: "ArrowsDB"}
+    - {path: "AssignmentExpression[left.property.name='write'] FunctionExpression > Identifier[name='e']", rename: "storeName"}
+    - {path: "AssignmentExpression[left.property.name='write'] FunctionExpression > Identifier[name='t']", rename: "value"}
+    - {path: "AssignmentExpression[left.property.name='write'] FunctionExpression VariableDeclarator[id.name='i'] > Identifier", rename: "openRequest"}
+    - {path: "AssignmentExpression[left.property.name='write'] FunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "db"}
+    - {path: "AssignmentExpression[left.property.name='write'] FunctionExpression FunctionExpression > Identifier[name='e']", rename: "db"}
+    - {path: "AssignmentExpression[left.property.name='write'] FunctionExpression FunctionExpression > Identifier[name='t']", rename: "storeName"}
+    - {path: "AssignmentExpression[left.property.name='write'] FunctionExpression FunctionExpression > Identifier[name='s']", rename: "key"}
+    - {path: "AssignmentExpression[left.property.name='write'] FunctionExpression FunctionExpression VariableDeclarator[id.name='i'] > Identifier", rename: "putRequest"}
+    - {path: "AssignmentExpression[left.property.name='read'] FunctionExpression > Identifier[name='e']", rename: "storeName"}
+    - {path: "AssignmentExpression[left.property.name='read'] FunctionExpression > Identifier[name='t']", rename: "key"}
+    - {path: "AssignmentExpression[left.property.name='read'] FunctionExpression VariableDeclarator[id.name='i'] > Identifier", rename: "openRequest"}
+    - {path: "AssignmentExpression[left.property.name='read'] FunctionExpression VariableDeclarator[id.name='a'] > Identifier", rename: "result"}
+    - {path: "AssignmentExpression[left.property.name='read'] FunctionExpression FunctionExpression > Identifier[name='e']", rename: "db"}
+    - {path: "AssignmentExpression[left.property.name='read'] FunctionExpression FunctionExpression > Identifier[name='t']", rename: "storeName"}
+    - {path: "AssignmentExpression[left.property.name='read'] FunctionExpression FunctionExpression > Identifier[name='s']", rename: "key"}
+    - {path: "AssignmentExpression[left.property.name='read'] FunctionExpression FunctionExpression VariableDeclarator[id.name='i'] > Identifier", rename: "getRequest"}
+    - {path: "AssignmentExpression[left.property.name='read'] NewExpression[callee.name='Promise'] ArrowFunctionExpression > Identifier[name='s']", rename: "resolvePromise"}
+    - {path: "AssignmentExpression[left.property.name='read'] NewExpression[callee.name='Promise'] ArrowFunctionExpression > Identifier[name='o']", rename: "rejectPromise"}
+    - {path: "AssignmentExpression[left.property.name='getAllKeys'] FunctionExpression > Identifier[name='e']", rename: "storeName"}
+    - {path: "AssignmentExpression[left.property.name='getAllKeys'] FunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "openRequest"}
+    - {path: "AssignmentExpression[left.property.name='getAllKeys'] NewExpression[callee.name='Promise'] ArrowFunctionExpression > Identifier[name='s']", rename: "resolvePromise"}
+    - {path: "AssignmentExpression[left.property.name='getAllKeys'] NewExpression[callee.name='Promise'] ArrowFunctionExpression > Identifier[name='i']", rename: "rejectPromise"}
+    - {path: "AssignmentExpression[left.property.name='getAllKeys'] NewExpression[callee.name='Promise'] ArrowFunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "getAllKeysRequest"}
+    - {path: "AssignmentExpression[left.property.name='remove'] FunctionExpression > Identifier[name='e']", rename: "storeName"}
+    - {path: "AssignmentExpression[left.property.name='remove'] FunctionExpression > Identifier[name='t']", rename: "key"}
+    - {path: "AssignmentExpression[left.property.name='remove'] FunctionExpression VariableDeclarator[id.name='i'] > Identifier", rename: "openRequest"}
+    - {path: "AssignmentExpression[left.property.name='remove'] NewExpression[callee.name='Promise'] ArrowFunctionExpression > Identifier[name='s']", rename: "resolvePromise"}
+    - {path: "AssignmentExpression[left.property.name='remove'] NewExpression[callee.name='Promise'] ArrowFunctionExpression > Identifier[name='o']", rename: "rejectPromise"}
+    - {path: "AssignmentExpression[left.property.name='remove'] NewExpression[callee.name='Promise'] ArrowFunctionExpression VariableDeclarator[id.name='a'] > Identifier", rename: "deleteRequest"}
+
+  PlayerUI:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "game"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "mapInfo"}
+    - {path: "ClassMethod[key.name='updateToolbar'] > Identifier[name='e']", rename: "playerAccess"}
+    - {path: "ClassMethod[key.name='addSpeedController'] CallExpression ArrowFunctionExpression > Identifier[name='e']", rename: "speedLevel"}
+    - {path: "ClassMethod[key.name='addSpeedController'] ArrowFunctionExpression > Identifier[name='e']", rename: "value"}
+    - {path: "ClassMethod[key.name='addUndoButton'] > Identifier[name='e']", rename: "onUndo"}
+    - {path: "ClassMethod[key.name='addRedoButton'] > Identifier[name='e']", rename: "onRedo"}
+    - {path: "ClassMethod[key.name='updateUndoButtonState'] > Identifier[name='e']", rename: "enabled"}
+    - {path: "ClassMethod[key.name='updateRedoButtonState'] > Identifier[name='e']", rename: "enabled"}
+    - {path: "ClassMethod[key.name='toggleMenu'] > Identifier[name='e']", rename: "game"}
+    - {path: "ClassMethod[key.name='showAutoSaveMessage'] > Identifier[name='e']", rename: "message"}
+    - {path: "ClassMethod[key.name='showAutoSaveMessage'] > AssignmentPattern[left.name='t'] > Identifier", rename: "isError"}
+    - {path: "ClassMethod[key.name='showAutoSaveMessage'] VariableDeclarator[id.name='e'] > Identifier", rename: "hintRect"}
+    - {path: "ClassMethod[key.name='addControlsHint'] > Identifier[name='e']", rename: "rights"}
+    - {path: "ClassMethod[key.name='setControlsHintState'] > Identifier[name='e']", rename: "state"}
+    - {path: "ClassMethod[key.name='updateControlsHintRights'] > Identifier[name='e']", rename: "rights"}
+
+  LocalRoutes:
+    - {path: "FunctionDeclaration > Identifier[name='e']", rename: "mapId"}
+    - {path: "FunctionDeclaration VariableDeclarator[id.name='t']", rename: "cached"}
+    - {path: "FunctionDeclaration VariableDeclarator[id.name='s']", rename: "name"}
+    - {path: "FunctionDeclaration VariableDeclarator[id.name='i']", rename: "version"}
+    - {path: "FunctionDeclaration VariableDeclarator[id.name='o']", rename: "data"}
+    - {path: "FunctionDeclaration VariableDeclarator[id.name='n']", rename: "isPublic"}
+    - {path: "FunctionDeclaration VariableDeclarator[id.name='r']", rename: "tags"}
+    - {path: "VariableDeclarator[id.name='r'] > Identifier[name='r']", rename: "LocalRoutes"}
+    - {path: "AssignmentExpression[left.property.name='getMaps'] FunctionExpression > Identifier[name='e']", rename: "ids"}
+    - {path: "AssignmentExpression[left.property.name='getMaps'] FunctionExpression VariableDeclarator[id.name='t']", rename: "promises"}
+    - {path: "AssignmentExpression[left.property.name='getMaps'] FunctionExpression VariableDeclarator[id.name='i']", rename: "mapId"}
+    - {path: "AssignmentExpression[left.property.name='getMaps'] FunctionExpression VariableDeclarator[id.name='s']", rename: "maps"}
+    - {path: "AssignmentExpression[left.property.name='getMapsInfo'] FunctionExpression VariableDeclarator[id.name='e']", rename: "keys"}
+    - {path: "AssignmentExpression[left.property.name='getMapsInfo'] FunctionExpression VariableDeclarator[id.name='t']", rename: "promises"}
+    - {path: "AssignmentExpression[left.property.name='getMapsInfo'] FunctionExpression VariableDeclarator[id.name='i']", rename: "key"}
+    - {path: "AssignmentExpression[left.property.name='getMapsInfo'] FunctionExpression VariableDeclarator[id.name='s']", rename: "localMaps"}
+    - {path: "AssignmentExpression[left.property.name='saveMap'] FunctionExpression > Identifier[name='e']", rename: "mapInfo"}
+    - {path: "AssignmentExpression[left.property.name='saveMap'] FunctionExpression > Identifier[name='t']", rename: "data"}
+    - {path: "AssignmentExpression[left.property.name='saveMapInfo'] FunctionExpression > Identifier[name='e']", rename: "mapInfo"}
+    - {path: "AssignmentExpression[left.property.name='saveMapInfo'] FunctionExpression VariableDeclarator[id.name='t']", rename: "existing"}
+    - {path: "AssignmentExpression[left.property.name='createMap'] FunctionExpression VariableDeclarator[id.name='e']", rename: "keys"}
+    - {path: "AssignmentExpression[left.property.name='createMap'] FunctionExpression VariableDeclarator[id.name='t']", rename: "ids"}
+    - {path: "AssignmentExpression[left.property.name='createMap'] FunctionExpression VariableDeclarator[id.name='i']", rename: "key"}
+    - {path: "AssignmentExpression[left.property.name='createMap'] FunctionExpression VariableDeclarator[id.name='o']", rename: "suffix"}
+    - {path: "AssignmentExpression[left.property.name='createMap'] FunctionExpression VariableDeclarator[id.name='a']", rename: "num"}
+    - {path: "AssignmentExpression[left.property.name='createMap'] FunctionExpression VariableDeclarator[id.name='s']", rename: "newId"}
+    - {path: "AssignmentExpression[left.property.name='deleteMap'] FunctionExpression > Identifier[name='e']", rename: "mapId"}
+    - {path: "AssignmentExpression[left.property.name='getLevels'] FunctionExpression VariableDeclarator[id.name='e']", rename: "levelsJson"}
+    - {path: "AssignmentExpression[left.property.name='getLevels'] FunctionExpression VariableDeclarator[id.name='t']", rename: "levels"}
+    - {path: "AssignmentExpression[left.property.name='completeLevel'] FunctionExpression > Identifier[name='e']", rename: "levelId"}
+    - {path: "AssignmentExpression[left.property.name='completeLevel'] FunctionExpression VariableDeclarator[id.name='t']", rename: "levelsJson"}
+    - {path: "AssignmentExpression[left.property.name='completeLevel'] FunctionExpression VariableDeclarator[id.name='s']", rename: "levels"}
+
+  ArrowData:
+    - {path: "ClassMethod[key.name='fromArrow'] > Identifier[name='e']", rename: "arrow"}
+    - {path: "ClassMethod[key.name='fromArrow'] VariableDeclarator[id.name='t'] > Identifier", rename: "arrowData"}
+    - {path: "ClassMethod[key.name='fromState'] > Identifier[name='e']", rename: "type"}
+    - {path: "ClassMethod[key.name='fromState'] > Identifier[name='t']", rename: "rotation"}
+    - {path: "ClassMethod[key.name='fromState'] > Identifier[name='i']", rename: "flipped"}
+    - {path: "ClassMethod[key.name='fromState'] VariableDeclarator[id.name='o'] > Identifier", rename: "arrowData"}
+    - {path: "ClassMethod[key.name='fromCopy'] > Identifier[name='e']", rename: "arrowData"}
+    - {path: "ClassMethod[key.name='fromCopy'] VariableDeclarator[id.name='t'] > Identifier", rename: "copy"}
+    - {path: "ClassMethod[key.name='equals'] > Identifier[name='e']", rename: "other"}
+
+  GamePage:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "mapInfo"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='t'] > Identifier", rename: "canvas"}
+    - {path: "ClassMethod[key.name='constructor'] CatchClause[param.name='e']", rename: "loadError"}
+    - {path: "ClassMethod[key.name='dispose'] VariableDeclarator[id.name='e'] > Identifier", rename: "savedData"}
+    - {path: "ClassProperty[key.name='resize']", rename: "resizeHandler"}
+    - {path: "ClassMethod[key.name='autosave'] VariableDeclarator[id.name='e'] > Identifier", rename: "savedData"}
+    - {path: "ClassMethod[key.name='saveMap'] > Identifier[name='e']", rename: "savedData"}
+    - {path: "ClassMethod[key.name='saveMap'] VariableDeclarator[id.name='t'] > Identifier", rename: "base64"}
+    - {path: "ClassMethod[key.name='saveMap'] VariableDeclarator[id.name='s'] > Identifier", rename: "status"}
+
+  Utils:
+    - {path: "VariableDeclarator[id.name='s'] > Identifier[name='s']", rename: "Utils"}
+    - {path: "AssignmentExpression[left.property.name='arrayBufferToBase64'] FunctionExpression > Identifier[name='e']", rename: "buffer"}
+    - {path: "AssignmentExpression[left.property.name='arrayBufferToBase64'] FunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "base64"}
+    - {path: "AssignmentExpression[left.property.name='arrayBufferToBase64'] FunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "bytes"}
+    - {path: "AssignmentExpression[left.property.name='arrayBufferToBase64'] FunctionExpression VariableDeclarator[id.name='i'] > Identifier", rename: "byteLength"}
+
+  UIPauseSign:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='t'] > Identifier", rename: "line1Div"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='s'] > Identifier", rename: "line2Div"}
+
+  UIMenu:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "mapInfo"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "game"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='a'] > Identifier", rename: "backButtonDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='n'] > Identifier", rename: "goToMaps"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='r'] > Identifier", rename: "backIconImg"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='l'] > Identifier", rename: "backTextSpan"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='h'] > Identifier", rename: "nameInput"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='c'] > Identifier", rename: "publicIconImg"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='d'] > Identifier", rename: "togglePublic"}
+    - {path: "ClassMethod[key.name='saveMap'] > Identifier[name='e']", rename: "mapInfo"}
+    - {path: "ClassMethod[key.name='saveMap'] > Identifier[name='t']", rename: "game"}
+    - {path: "ClassMethod[key.name='saveMap'] VariableDeclarator[id.name='s'] > Identifier", rename: "savedData"}
+    - {path: "ClassMethod[key.name='saveMap'] VariableDeclarator[id.name='i'] > Identifier", rename: "base64"}
+    - {path: "ClassMethod[key.name='saveMap'] VariableDeclarator[id.name='r'] > Identifier", rename: "status"}
+    - {path: "ClassProperty[key.name='setSaved'] ArrowFunctionExpression > Identifier[name='e']", rename: "status"}
+
+  ToolsData:
+    - {path: "ClassMethod[key.name='getToolName'] > Identifier[name='e']", rename: "toolId"}
+    - {path: "ClassProperty[key.name='TOOL_RIGHTS'] ArrowFunctionExpression > Identifier[name='e']", rename: "playerAccess"}
+
+  UIInventory:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='addArrows'] > Identifier[name='e']", rename: "arrowGroups"}
+    - {path: "ClassMethod[key.name='addArrows'] ForStatement[init.declarations.0.id.name='t'] VariableDeclarator[id.name='s'] > Identifier", rename: "group"}
+    - {path: "ClassMethod[key.name='addArrows'] ForStatement[init.declarations.0.id.name='t'] VariableDeclarator[id.name='i'] > Identifier", rename: "lineDiv"}
+    - {path: "ClassMethod[key.name='addArrows'] ForStatement[init.declarations.0.id.name='e'] VariableDeclarator[id.name='o'] > Identifier", rename: "itemDiv"}
+    - {path: "ClassMethod[key.name='addArrows'] ForStatement[init.declarations.0.id.name='e'] VariableDeclarator[id.name='a'] > Identifier", rename: "arrowImg"}
+    - {path: "ClassMethod[key.name='updateSelected'] > Identifier[name='e']", rename: "activeType"}
+    - {path: "ClassMethod[key.name='updateSelected'] ForStatement[init.declarations.0.id.name='t'] ForStatement[init.declarations.0.id.name='s'] VariableDeclarator[id.name='i'] > Identifier", rename: "itemDiv"}
+
+  UIToolbarItem:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "slotIndex"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "itemIndex"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='i']", rename: "mode"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='o']", rename: "selectCallback"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='l'] > Identifier", rename: "colorRegex"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='h'] > Identifier", rename: "activationText"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='c'] > Identifier", rename: "actionText"}
+    - {path: "ClassMethod[key.name='constructor'] IfStatement VariableDeclarator[id.name='e'] > Identifier", rename: "titleHeading"}
+    - {path: "ClassMethod[key.name='constructor'] IfStatement VariableDeclarator[id.name='t'] > Identifier", rename: "activationParagraph"}
+    - {path: "ClassMethod[key.name='constructor'] IfStatement VariableDeclarator[id.name='i'] > Identifier", rename: "actionParagraph"}
+    - {path: "ClassMethod[key.name='constructor'] AssignmentExpression[left.property.name='onmouseover'] ArrowFunctionExpression VariableDeclarator[id.name='e'] > Identifier", rename: "rect"}
+    - {path: "ClassMethod[key.name='constructor'] AssignmentExpression[left.property.name='onmouseover'] ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "itemOffset"}
+    - {path: "ClassMethod[key.name='setImage'] > Identifier[name='e']", rename: "itemIndex"}
+    - {path: "ClassMethod[key.name='setImage'] VariableDeclarator[id.name='t'] > Identifier", rename: "toolName"}
+    - {path: "ClassProperty[key.name='pointerUp'] ArrowFunctionExpression", rename: "pointerUp"}
+    - {path: "ClassProperty[key.name='replaceInlineColors'] ArrowFunctionExpression > Identifier[name='e']", rename: "match"}
+    - {path: "ClassProperty[key.name='replaceInlineColors'] VariableDeclarator[id.name='t'] > Identifier", rename: "colorMatch"}
+    - {path: "ClassProperty[key.name='replaceInlineColors'] VariableDeclarator[id.name='s'] > Identifier", rename: "colorCode"}
+    - {path: "ClassProperty[key.name='replaceInlineColors'] VariableDeclarator[id.name='i'] > Identifier", rename: "color"}
+    - {path: "ClassProperty[key.name='replaceInlineColors'] VariableDeclarator[id.name='o'] > Identifier", rename: "textMatch"}
+
+  LoginPage:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "onGoogleLogin"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "reloadPage"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "startGame"}
+    - {path: "ClassMethod[key.name='constructor'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "langIndex"}
+    - {path: "ClassMethod[key.name='constructor'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "langCode"}
+    - {path: "ClassMethod[key.name='constructor'] ForStatement VariableDeclarator[id.name='o'] > Identifier", rename: "langDiv"}
+    - {path: "ClassMethod[key.name='constructor'] ForStatement VariableDeclarator[id.name='a'] > Identifier", rename: "cookiesAccepted"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='n'] > Identifier", rename: "langButtons"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='l'] > Identifier", rename: "captionHeading"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='h'] > Identifier", rename: "textDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='c'] > Identifier", rename: "policyLinksDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='d'] > Identifier", rename: "isRussian"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='u'] > Identifier", rename: "youtubeLink"}
+    - {path: "ClassMethod[key.name='constructor'] IfStatement VariableDeclarator[id.name='e'] > Identifier", rename: "telegramLink"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='g'] > Identifier", rename: "discordLink"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='m'] > Identifier", rename: "steamLink"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='p'] > Identifier", rename: "privacyLink"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='w'] > Identifier", rename: "termsLink"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='v'] > Identifier", rename: "versionDiv"}
+    - {path: "ClassMethod[key.name='addStartButton'] > Identifier[name='e']", rename: "startGame"}
+    - {path: "ClassMethod[key.name='addStartButton'] > Identifier[name='t']", rename: "googleLogin"}
+    - {path: "ClassMethod[key.name='addStartButton'] CallExpression[callee.property.name='checkUser'] ArrowFunctionExpression:first-child VariableDeclarator[id.name='t'] > Identifier", rename: "startButton"}
+    - {path: "ClassMethod[key.name='addStartButton'] CallExpression[callee.property.name='checkUser'] ArrowFunctionExpression:nth-child(2) VariableDeclarator[id.name='s'] > Identifier", rename: "googleButton"}
+    - {path: "ClassMethod[key.name='addStartButton'] CallExpression[callee.property.name='checkUser'] ArrowFunctionExpression:nth-child(2) VariableDeclarator[id.name='i'] > Identifier", rename: "guestButton"}
+    - {path: "ClassMethod[key.name='addStartButton'] VariableDeclarator[id.name='s'] > Identifier", rename: "cookiesDiv"}
+    - {path: "ClassMethod[key.name='addStartButton'] VariableDeclarator[id.name='a'] > Identifier", rename: "cookiesTitleDiv"}
+    - {path: "ClassMethod[key.name='addStartButton'] VariableDeclarator[id.name='n'] > Identifier", rename: "cookiesTextDiv"}
+    - {path: "ClassMethod[key.name='addStartButton'] VariableDeclarator[id.name='r'] > Identifier", rename: "acceptButton"}
+    - {path: "ClassMethod[key.name='makeLoginWithGoogleButton'] VariableDeclarator[id.name='t'] > Identifier", rename: "iconWrapper"}
+    - {path: "ClassMethod[key.name='makeLoginWithGoogleButton'] VariableDeclarator[id.name='s'] > Identifier", rename: "iconImg"}
+    - {path: "ClassMethod[key.name='makeLoginWithGoogleButton'] VariableDeclarator[id.name='i'] > Identifier", rename: "textParagraph"}
+    - {path: "ClassProperty[key.name='resize'] VariableDeclarator[id.name='e'] > Identifier", rename: "panelWidth"}
+    - {path: "ClassProperty[key.name='resize'] VariableDeclarator[id.name='t'] > Identifier", rename: "cellSize"}
+    - {path: "ClassProperty[key.name='resize'] VariableDeclarator[id.name='s'] > Identifier", rename: "chunkCells"}
+    - {path: "ClassProperty[key.name='resize'] VariableDeclarator[id.name='i'] > Identifier", rename: "padding"}
+    - {path: "ClassProperty[key.name='resize'] VariableDeclarator[id.name='o'] > Identifier", rename: "canvasWidth"}
+    - {path: "ClassProperty[key.name='update'] VariableDeclarator[id.name='e'] > Identifier", rename: "chunkY"}
+    - {path: "ClassProperty[key.name='update'] VariableDeclarator[id.name='t'] > Identifier", rename: "topChunkY"}
+    - {path: "ClassMethod[key.name='setChunk'] > Identifier[name='e']", rename: "chunkY"}
+    - {path: "ClassMethod[key.name='setChunk'] VariableDeclarator[id.name='t'] > Identifier", rename: "chunk"}
+    - {path: "ClassMethod[key.name='setChunk'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "cellX"}
+    - {path: "ClassMethod[key.name='setChunk'] ForStatement VariableDeclarator[id.name='i'] > Identifier", rename: "cellY"}
+    - {path: "ClassMethod[key.name='setChunk'] ForStatement VariableDeclarator[id.name='o'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='setChunk'] ForStatement VariableDeclarator[id.name='a'] > Identifier", rename: "hash"}
+    - {path: "ClassMethod[key.name='deleteChunk'] > Identifier[name='e']", rename: "chunkY"}
+    - {path: "ClassMethod[key.name='deleteChunk'] VariableDeclarator[id.name='t'] > Identifier", rename: "chunk"}
+
+  LevelArrow:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "type"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "x"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "y"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='o']", rename: "action"}
+    - {path: "ClassMethod[key.name='setAction'] > Identifier[name='e']", rename: "action"}
+    - {path: "ClassMethod[key.name='setLevelAction'] > Identifier[name='e']", rename: "levelAction"}
+
+  UIMapsMenuItem:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "label"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "onClick"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='i'] > Identifier", rename: "nameDiv"}
+
+  OverlayLevel:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "levelInfo"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "overlayInfo"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "onLevelClick"}
+    - {path: "ClassMethod[key.name='setState'] > Identifier[name='e']", rename: "state"}
+    - {path: "ClassMethod[key.name='add'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='update'] > Identifier[name='e']", rename: "offset"}
+    - {path: "ClassMethod[key.name='update'] > Identifier[name='t']", rename: "scale"}
+    - {path: "ClassMethod[key.name='update'] > AssignmentPattern[left.name='s'] > Identifier", rename: "devicePixelRatio"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='o'] > Identifier", rename: "cellPx"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='a'] > Identifier", rename: "padding"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='n'] > Identifier", rename: "left"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='r'] > Identifier", rename: "top"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='l'] > Identifier", rename: "width"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='h'] > Identifier", rename: "height"}
+    - {path: "ClassProperty[key.name='click'] ArrowFunctionExpression", rename: "click"}
+
+  AuthGoogle:
+    - {path: "VariableDeclarator[id.name='o'] > Identifier[name='o']", rename: "AuthGoogle"}
+    - {path: "AssignmentExpression[left.property.name='getAuthURL'] FunctionExpression VariableDeclarator[id.name='e'] > Identifier", rename: "params"}
+
+  LevelsPage:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "onLevelClick"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='s'] > Identifier", rename: "canvas"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='i'] > Identifier", rename: "containerRect"}
+    - {path: "ClassMethod[key.name='makeMap'] VariableDeclarator[id.name='e'] > Identifier", rename: "completedLevels"}
+    - {path: "ClassMethod[key.name='focusOnLevel'] ForOfStatement VariableDeclarator[id.name='e'] > Identifier", rename: "entry"}
+    - {path: "ClassMethod[key.name='focusOnLevel'] ForOfStatement VariableDeclarator[id.name='t'] > Identifier", rename: "overlay"}
+    - {path: "ClassMethod[key.name='focusOnLevel'] VariableDeclarator[id.name='e'] > Identifier", rename: "centerX"}
+    - {path: "ClassMethod[key.name='focusOnLevel'] VariableDeclarator[id.name='s'] > Identifier", rename: "centerY"}
+    - {path: "ClassMethod[key.name='addLevelOverlay'] > Identifier[name='e']", rename: "levelId"}
+    - {path: "ClassMethod[key.name='addLevelOverlay'] VariableDeclarator[id.name='t'] > Identifier", rename: "levelInfo"}
+    - {path: "ClassMethod[key.name='addLevelOverlay'] VariableDeclarator[id.name='s'] > Identifier", rename: "overlayInfo"}
+    - {path: "ClassMethod[key.name='addLevelOverlay'] VariableDeclarator[id.name='i'] > Identifier", rename: "overlay"}
+    - {path: "ClassMethod[key.name='makeRedArrows'] > Identifier[name='e']", rename: "startX"}
+    - {path: "ClassMethod[key.name='makeRedArrows'] > Identifier[name='t']", rename: "startY"}
+    - {path: "ClassMethod[key.name='makeRedArrows'] > Identifier[name='s']", rename: "endX"}
+    - {path: "ClassMethod[key.name='makeRedArrows'] > Identifier[name='i']", rename: "endY"}
+    - {path: "ClassMethod[key.name='makeRedArrows'] > Identifier[name='o']", rename: "verticalFirst"}
+    - {path: "ClassMethod[key.name='makeRedArrows'] VariableDeclarator[id.name='a'] > Identifier", rename: "dx"}
+    - {path: "ClassMethod[key.name='makeRedArrows'] VariableDeclarator[id.name='n'] > Identifier", rename: "dy"}
+    - {path: "ClassMethod[key.name='makeRedArrows'] VariableDeclarator[id.name='r'] > Identifier", rename: "signX"}
+    - {path: "ClassMethod[key.name='makeRedArrows'] VariableDeclarator[id.name='l'] > Identifier", rename: "signY"}
+    - {path: "ClassMethod[key.name='makeRedArrows'] VariableDeclarator[id.name='h'] > Identifier", rename: "x"}
+    - {path: "ClassMethod[key.name='makeRedArrows'] VariableDeclarator[id.name='c'] > Identifier", rename: "y"}
+    - {path: "ClassMethod[key.name='makeRedArrows'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "step"}
+    - {path: "ClassMethod[key.name='makeObliqueArrows'] > Identifier[name='e']", rename: "startX"}
+    - {path: "ClassMethod[key.name='makeObliqueArrows'] > Identifier[name='t']", rename: "startY"}
+    - {path: "ClassMethod[key.name='makeObliqueArrows'] > Identifier[name='s']", rename: "length"}
+    - {path: "ClassMethod[key.name='makeObliqueArrows'] > Identifier[name='i']", rename: "flipX"}
+    - {path: "ClassMethod[key.name='makeObliqueArrows'] > Identifier[name='o']", rename: "flipY"}
+    - {path: "ClassMethod[key.name='makeObliqueArrows'] VariableDeclarator[id.name='a'] > Identifier", rename: "x"}
+    - {path: "ClassMethod[key.name='makeObliqueArrows'] VariableDeclarator[id.name='n'] > Identifier", rename: "y"}
+    - {path: "ClassMethod[key.name='makeObliqueArrows'] VariableDeclarator[id.name='r'] > Identifier", rename: "arrowType"}
+    - {path: "ClassMethod[key.name='makeObliqueArrows'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "index"}
+    - {path: "ClassMethod[key.name='makeObliqueArrows'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "offsetY"}
+    - {path: "ClassMethod[key.name='makeBlueArrows'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='makeBlueArrows'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='makeBlueArrows'] > Identifier[name='s']", rename: "count"}
+    - {path: "ClassMethod[key.name='makeBlueArrows'] VariableDeclarator[id.name='i'] > Identifier", rename: "curX"}
+    - {path: "ClassMethod[key.name='makeBlueArrows'] VariableDeclarator[id.name='o'] > Identifier", rename: "curY"}
+    - {path: "ClassMethod[key.name='makeBlueArrows'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "index"}
+    - {path: "ClassProperty[key.name='resize'] VariableDeclarator[id.name='e'] > Identifier", rename: "containerRect"}
+    - {path: "ClassProperty[key.name='resize'] VariableDeclarator[id.name='t'] > Identifier", rename: "pixelRatio"}
+    - {path: "ClassMethod[key.name='updateMap'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "step"}
+    - {path: "ClassMethod[key.name='updateMap'] ForOfStatement VariableDeclarator[id.name='e'] > Identifier", rename: "entry"}
+    - {path: "ClassMethod[key.name='updateMap'] ForOfStatement VariableDeclarator[id.name='t'] > Identifier", rename: "overlay"}
+    - {path: "ClassMethod[key.name='getContainerRect'] VariableDeclarator[id.name='e'] > Identifier", rename: "rect"}
+    - {path: "ClassMethod[key.name='getContainerRect'] VariableDeclarator[id.name='t'] > Identifier", rename: "parentRect"}
+
+  PlayerMapAction:
+    - {path: "ClassMethod[key.name='addChangedArrow'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='addChangedArrow'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='addChangedArrow'] > Identifier[name='s']", rename: "before"}
+    - {path: "ClassMethod[key.name='addChangedArrow'] > Identifier[name='i']", rename: "after"}
+    - {path: "ClassMethod[key.name='addChangedArrow'] VariableDeclarator[id.name='o'] > Identifier", rename: "key"}
+    - {path: "ClassMethod[key.name='addChangedArrow'] VariableDeclarator[id.name='a'] > Identifier", rename: "existing"}
+
+  UIToolbar:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "initialGroup"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "playerAccess"}
+    - {path: "ClassMethod[key.name='setItems'] > Identifier[name='e']", rename: "groupIndex"}
+    - {path: "ClassMethod[key.name='setItems'] > Identifier[name='t']", rename: "arrowGroups"}
+    - {path: "ClassMethod[key.name='setItems'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "slotIndex"}
+    - {path: "ClassMethod[key.name='setItems'] ForStatement VariableDeclarator[id.name='i'] > Identifier", rename: "item"}
+    - {path: "ClassMethod[key.name='setTools'] > Identifier[name='e']", rename: "toolGroup"}
+    - {path: "ClassMethod[key.name='setTools'] VariableDeclarator[id.name='t'] > Identifier", rename: "toolIds"}
+    - {path: "ClassMethod[key.name='setTools'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "slotIndex"}
+    - {path: "ClassMethod[key.name='activateItem'] > Identifier[name='e']", rename: "arrowType"}
+    - {path: "ClassMethod[key.name='activateItem'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "index"}
+    - {path: "ClassMethod[key.name='activateItem'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "item"}
+    - {path: "ClassMethod[key.name='disableItems'] > Identifier[name='e']", rename: "disabledTypes"}
+    - {path: "ClassMethod[key.name='disableItems'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "index"}
+    - {path: "ClassMethod[key.name='disableItems'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "item"}
+    - {path: "ClassMethod[key.name='setSelectCallback'] > Identifier[name='e']", rename: "callback"}
+    - {path: "ClassMethod[key.name='setArrowsCallback'] > Identifier[name='e']", rename: "onPrevious"}
+    - {path: "ClassMethod[key.name='setArrowsCallback'] > Identifier[name='t']", rename: "onNext"}
+    - {path: "ClassMethod[key.name='setArrows'] > Identifier[name='e']", rename: "groupIndex"}
+    - {path: "ClassMethod[key.name='setArrows'] > Identifier[name='t']", rename: "arrowGroups"}
+    - {path: "ClassProperty[key.name='pointerUp'] ArrowFunctionExpression", rename: "pointerUp"}
+
+  GameText:
+    - {path: "VariableDeclarator[id.name='o'] > Identifier[name='o']", rename: "GameText"}
+    - {path: "CallExpression > FunctionExpression > Identifier[name='e']", rename: "gameTextExports"}
+
+  GuidePage:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='t'] > Identifier", rename: "arrowsCount"}
+    - {path: "ClassMethod[key.name='constructor'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "arrowType"}
+    - {path: "ClassMethod[key.name='addArrowInfo'] > Identifier[name='e']", rename: "arrowType"}
+
+  NameChangePage:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='t'] > Identifier", rename: "centerDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='s'] > Identifier", rename: "titleDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='a'] > Identifier", rename: "nameInput"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='n'] > Identifier", rename: "messageDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='r'] > Identifier", rename: "buttonDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='l'] > Identifier", rename: "cancelButton"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='h'] > Identifier", rename: "acceptButton"}
+    - {path: "ClassMethod[key.name='constructor'] ArrowFunctionExpression[async=true] VariableDeclarator[id.name='e'] > Identifier", rename: "name"}
+    - {path: "ClassProperty[key.name='acceptCallback'] ArrowFunctionExpression > Identifier[name='e']", rename: "name"}
+
+  PlayerAccess:
+    - {path: "ClassMethod[key.name='makeCopy'] > Identifier[name='e']", rename: "access"}
+    - {path: "ClassMethod[key.name='makeOnly'] > Identifier[name='e']", rename: "overrides"}
+    - {path: "ClassMethod[key.name='makeOnly'] VariableDeclarator[id.name='t'] > Identifier", rename: "access"}
+
+  loadShader:
+    - {path: "VariableDeclarator[id.name='s'] > Identifier[name='s']", rename: "shaderCache"}
+    - {path: "AssignmentExpression[left.property.name='loadShader'] FunctionExpression > Identifier[name='e']", rename: "url"}
+    - {path: "AssignmentExpression[left.property.name='loadShader'] FunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "response"}
+    - {path: "AssignmentExpression[left.property.name='loadShader'] FunctionExpression VariableDeclarator[id.name='i'] > Identifier", rename: "source"}
+
+  Page:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+
+  MenuPage:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "initialCategory"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "onCategorySelect"}
+    - {path: "ClassMethod[key.name='addMenuItem'] > Identifier[name='e']", rename: "categoryId"}
+    - {path: "ClassMethod[key.name='addMenuItem'] VariableDeclarator[id.name='t'] > Identifier", rename: "categoryData"}
+    - {path: "ClassMethod[key.name='addMenuItem'] VariableDeclarator[id.name='s'] > Identifier", rename: "title"}
+    - {path: "ClassMethod[key.name='addMenuItem'] VariableDeclarator[id.name='i'] > Identifier", rename: "icon"}
+    - {path: "ClassMethod[key.name='addMenuItem'] VariableDeclarator[id.name='o'] > Identifier", rename: "itemDiv"}
+    - {path: "ClassMethod[key.name='addMenuItem'] VariableDeclarator[id.name='a'] > Identifier", rename: "iconImg"}
+    - {path: "ClassMethod[key.name='addMenuItem'] VariableDeclarator[id.name='n'] > Identifier", rename: "titleDiv"}
+    - {path: "ClassMethod[key.name='setCategory'] > Identifier[name='e']", rename: "category"}
+    - {path: "ClassMethod[key.name='updateSelectedCategory'] ForOfStatement VariableDeclarator[id.name='e'] > Identifier", rename: "entry"}
+    - {path: "ClassMethod[key.name='updateSelectedCategory'] ForOfStatement VariableDeclarator[id.name='t'] > Identifier", rename: "element"}
+
+  UISavedItem:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "mapInfo"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "onClick"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='a'] > Identifier", rename: "topDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='r'] > Identifier", rename: "nameDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='l'] > Identifier", rename: "publicIconImg"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='h'] > Identifier", rename: "bottomDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='c'] > Identifier", rename: "tagsDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='d'] > Identifier", rename: "deleteIconImg"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='u'] > Identifier", rename: "doDelete"}
+    - {path: "ClassMethod[key.name='constructor'] CallExpression[callee.property.name='addEventListener'] ArrowFunctionExpression:has(NewExpression[callee.name='UIOkCancel']) > Identifier[name='e']", rename: "event"}
+    - {path: "ClassMethod[key.name='constructor'] CallExpression[callee.property.name='addEventListener'] ArrowFunctionExpression:has(NewExpression[callee.name='UIOkCancel']) VariableDeclarator[id.name='s'] > Identifier", rename: "confirmMessage"}
+
+  Levels:
+    - {path: "ClassMethod[key.name='addLevel'] > Identifier[name='e']", rename: "levelId"}
+    - {path: "ClassMethod[key.name='addLevel'] > Identifier[name='t']", rename: "nextLevels"}
+    - {path: "ClassMethod[key.name='addLevel'] > Identifier[name='s']", rename: "overlayX"}
+    - {path: "ClassMethod[key.name='addLevel'] > Identifier[name='i']", rename: "overlayY"}
+    - {path: "ClassMethod[key.name='addLevel'] > Identifier[name='o']", rename: "overlaySize"}
+    - {path: "ClassMethod[key.name='addLevel'] > Identifier[name='a']", rename: "outputs"}
+    - {path: "ClassMethod[key.name='addLevel'] VariableDeclarator[id.name='l'] > Identifier", rename: "levelInfo"}
+    - {path: "ClassMethod[key.name='addLevel'] VariableDeclarator[id.name='h'] > Identifier", rename: "overlayInfo"}
+    - {path: "ClassMethod[key.name='completeLevel'] > Identifier[name='e']", rename: "levelId"}
+    - {path: "ClassMethod[key.name='completeLevel'] VariableDeclarator[id.name='t'] > Identifier", rename: "level"}
+    - {path: "ClassMethod[key.name='completeLevel'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='e']", rename: "nextLevelId"}
+    - {path: "ClassMethod[key.name='completeLevel'] ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "nextLevel"}
+    - {path: "ClassMethod[key.name='unlockLevel'] > Identifier[name='e']", rename: "levelId"}
+    - {path: "ClassMethod[key.name='unlockLevel'] VariableDeclarator[id.name='t'] > Identifier", rename: "level"}
+    - {path: "ClassMethod[key.name='startLevel'] > Identifier[name='e']", rename: "levelPage"}
+    - {path: "ClassMethod[key.name='setPreviousLevels'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='e']", rename: "level"}
+    - {path: "ClassMethod[key.name='setPreviousLevels'] ArrowFunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='t']", rename: "nextLevelId"}
+    - {path: "ClassMethod[key.name='setPreviousLevels'] ArrowFunctionExpression ArrowFunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "nextLevel"}
+    - {path: "ClassMethod[key.name='allPreviousLevelsCompleted'] > Identifier[name='e']", rename: "level"}
+    - {path: "ClassMethod[key.name='allPreviousLevelsCompleted'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "index"}
+    - {path: "ClassMethod[key.name='allPreviousLevelsCompleted'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "previousLevel"}
+
+    # ==== key 0 (nth-child 1) ====
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(1) > ArrowFunctionExpression > Identifier[name='e']", rename: "levelPage"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(1) ArrowFunctionExpression CallExpression[callee.property.name='showTutorial'] > ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "gameView"}
+
+    # ==== key 1 (nth-child 2) ====
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(2) > ArrowFunctionExpression > Identifier[name='e']", rename: "levelPage"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(2) ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "checkFn"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(2) ArrowFunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "steps"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(2) ArrowFunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "stepActions"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(2) ArrowFunctionExpression VariableDeclarator[id.name='a'] > Identifier", rename: "advanceFn"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(2) ArrowFunctionExpression ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "stepIndex"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(2) ArrowFunctionExpression ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "step"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(2) ArrowFunctionExpression VariableDeclarator[id.name='n'] > Identifier", rename: "firstArrow"}
+
+    # ==== key 2 (nth-child 3) ====
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(3) > ArrowFunctionExpression > Identifier[name='e']", rename: "levelPage"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(3) ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "signalHistory"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(3) ArrowFunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "progressCounter"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(3) ArrowFunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "syncStartTick"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(3) ArrowFunctionExpression VariableDeclarator[id.name='n'] > Identifier", rename: "resetFn"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(3) ArrowFunctionExpression ArrowFunctionExpression[params.length=1] > Identifier[name='i']", rename: "levelArrow"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(3) ArrowFunctionExpression ArrowFunctionExpression[params.length=1] VariableDeclarator[id.name='a'] > Identifier", rename: "expectedA"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(3) ArrowFunctionExpression ArrowFunctionExpression[params.length=1] VariableDeclarator[id.name='r'] > Identifier", rename: "expectedB"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(3) ArrowFunctionExpression CallExpression[callee.property.name='showTutorial'] > ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "gameView"}
+
+    # ==== key 3 (nth-child 4) ====
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(4) > ArrowFunctionExpression > Identifier[name='e']", rename: "levelPage"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(4) ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "blockerArrow"}
+
+    # ==== key 4 (nth-child 5) ====
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(5) > ArrowFunctionExpression > Identifier[name='e']", rename: "levelPage"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(5) ArrowFunctionExpression CallExpression[callee.property.name='showTutorial'] > ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "gameView"}
+
+    # ==== key 5 (nth-child 6) ====
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(6) > ArrowFunctionExpression > Identifier[name='e']", rename: "levelPage"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(6) ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "signalHistory"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(6) ArrowFunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "progressCounter"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(6) ArrowFunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "syncStartTick"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(6) ArrowFunctionExpression VariableDeclarator[id.name='n'] > Identifier", rename: "resetFn"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(6) ArrowFunctionExpression ArrowFunctionExpression[params.length=1] > Identifier[name='i']", rename: "levelArrow"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(6) ArrowFunctionExpression CallExpression[callee.property.name='showTutorial'] > ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "gameView"}
+
+    # ==== key 6 (nth-child 7) ====
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(7) > ArrowFunctionExpression > Identifier[name='e']", rename: "levelPage"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(7) ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "progressCounter"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(7) ArrowFunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "resetFn"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(7) ArrowFunctionExpression ArrowFunctionExpression[params.length=1] > Identifier[name='i']", rename: "levelArrow"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(7) ArrowFunctionExpression CallExpression[callee.property.name='showTutorial'] > ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "gameViewData"}
+
+    # ==== key 7 (nth-child 8) ====
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(8) > ArrowFunctionExpression > Identifier[name='e']", rename: "levelPage"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(8) ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "progressCounter"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(8) ArrowFunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "inputPattern"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(8) ArrowFunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "expectedPattern"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(8) ArrowFunctionExpression VariableDeclarator[id.name='n'] > Identifier", rename: "signalHistory"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(8) ArrowFunctionExpression VariableDeclarator[id.name='r'] > Identifier", rename: "syncStartTick"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(8) ArrowFunctionExpression VariableDeclarator[id.name='l'] > Identifier", rename: "resetFn"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(8) ArrowFunctionExpression ArrowFunctionExpression[params.length=1] > Identifier[name='s']", rename: "levelArrow"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(8) ArrowFunctionExpression CallExpression[callee.property.name='showTutorial'] > ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "gameViewData"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(8) ArrowFunctionExpression CallExpression[callee.property.name='showTutorial'] > ArrowFunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "gameView"}
+
+    # ==== key 8 (nth-child 9) ====
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(9) > ArrowFunctionExpression > Identifier[name='e']", rename: "levelPage"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(9) ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "progressCounter"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(9) ArrowFunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "inputPattern"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(9) ArrowFunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "signalHistory"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(9) ArrowFunctionExpression VariableDeclarator[id.name='a'] > Identifier", rename: "syncStartTick"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(9) ArrowFunctionExpression VariableDeclarator[id.name='n'] > Identifier", rename: "resetFn"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(9) ArrowFunctionExpression ArrowFunctionExpression[params.length=1] > Identifier[name='i']", rename: "levelArrow"}
+
+    # ==== key 9 (nth-child 10) ====
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(10) > ArrowFunctionExpression > Identifier[name='e']", rename: "levelPage"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(10) ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "progressCounter"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(10) ArrowFunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "inputPattern"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(10) ArrowFunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "signalHistory"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(10) ArrowFunctionExpression VariableDeclarator[id.name='n'] > Identifier", rename: "syncStartTick"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(10) ArrowFunctionExpression VariableDeclarator[id.name='r'] > Identifier", rename: "resetFn"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(10) ArrowFunctionExpression ArrowFunctionExpression[params.length=1] > Identifier[name='i']", rename: "levelArrow"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(10) ArrowFunctionExpression CallExpression[callee.property.name='showTutorial'] > ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "gameView"}
+
+    # ==== key 10 (nth-child 11) ====
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(11) > ArrowFunctionExpression > Identifier[name='e']", rename: "levelPage"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(11) ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "progressCounter"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(11) ArrowFunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "inputPattern"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(11) ArrowFunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "expectedPattern"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(11) ArrowFunctionExpression VariableDeclarator[id.name='n'] > Identifier", rename: "signalHistory"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(11) ArrowFunctionExpression VariableDeclarator[id.name='r'] > Identifier", rename: "syncStartTick"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(11) ArrowFunctionExpression VariableDeclarator[id.name='l'] > Identifier", rename: "resetFn"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(11) ArrowFunctionExpression VariableDeclarator[id.name='h'] > Identifier", rename: "blockerArrow"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(11) ArrowFunctionExpression ArrowFunctionExpression[params.length=1] > Identifier[name='s']", rename: "levelArrow"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(11) ArrowFunctionExpression CallExpression[callee.property.name='showTutorial'] > ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "gameViewData"}
+    - {path: "ClassProperty[key.name='levelInitActions'] ArrayExpression > ArrayExpression:nth-child(11) ArrowFunctionExpression CallExpression[callee.property.name='showTutorial'] > ArrowFunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "gameView"}
+
+  SettingsPage:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='t'] > Identifier", rename: "logoutDiv"}
+    - {path: "ClassMethod[key.name='constructor'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "option"}
+    - {path: "ClassMethod[key.name='constructor'] ForStatement VariableDeclarator[id.name='i'] > Identifier", rename: "optionIndex"}
+    - {path: "ClassMethod[key.name='addBlock'] > Identifier[name='e']", rename: "name"}
+    - {path: "ClassMethod[key.name='addBlock'] > Identifier[name='t']", rename: "createContent"}
+    - {path: "ClassMethod[key.name='addBlock'] VariableDeclarator[id.name='s'] > Identifier", rename: "row"}
+    - {path: "ClassMethod[key.name='addBlock'] VariableDeclarator[id.name='i'] > Identifier", rename: "nameCell"}
+    - {path: "ClassMethod[key.name='addBlock'] VariableDeclarator[id.name='o'] > Identifier", rename: "valueCell"}
+    - {path: "ClassMethod[key.name='addLine'] VariableDeclarator[id.name='e'] > Identifier", rename: "row"}
+    - {path: "ClassMethod[key.name='addLine'] VariableDeclarator[id.name='t'] > Identifier", rename: "cell"}
+    - {path: "ClassMethod[key.name='addLine'] VariableDeclarator[id.name='s'] > Identifier", rename: "hr"}
+    - {path: "ClassMethod[key.name='addElement'] > Identifier[name='e']", rename: "element"}
+    - {path: "ClassMethod[key.name='addElement'] VariableDeclarator[id.name='t'] > Identifier", rename: "row"}
+    - {path: "ClassMethod[key.name='addElement'] VariableDeclarator[id.name='s'] > Identifier", rename: "cell"}
+    - {path: "VariableDeclarator[id.name='h'] > Identifier[name='h']", rename: "interfaceModes"}
+
+  LangUtils:
+    - {path: "VariableDeclarator[id.name='s'] > Identifier[name='s']", rename: "LangUtils"}
+    - {path: "AssignmentExpression[left.property.name='getLanguageFromString'] FunctionExpression > Identifier[name='e']", rename: "languageCode"}
+    - {path: "AssignmentExpression[left.property.name='getLanguageFromName'] FunctionExpression > Identifier[name='e']", rename: "languageName"}
+
+  UIGameView:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "mapDataBase64"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='s'] > Identifier", rename: "canvas"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='a'] > Identifier", rename: "bytes"}
+    - {path: "ClassMethod[key.name='setResizeAction'] > Identifier[name='e']", rename: "action"}
+    - {path: "ClassProperty[key.name='resize'] VariableDeclarator[id.name='e'] > Identifier", rename: "width"}
+    - {path: "ClassProperty[key.name='resize'] VariableDeclarator[id.name='t'] > Identifier", rename: "height"}
+
+  LevelPage:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "levelInfo"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='t'] > Identifier", rename: "canvas"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='s'] > Identifier", rename: "testTitleDiv"}
+    - {path: "ClassMethod[key.name='showTutorial'] VariableDeclarator[id.name='t'] > Identifier", rename: "response"}
+    - {path: "ClassMethod[key.name='showTutorial'] VariableDeclarator[id.name='s'] > Identifier", rename: "sidePanel"}
+    - {path: "ClassMethod[key.name='showTutorial'] VariableDeclarator[id.name='i'] > Identifier", rename: "htmlParts"}
+    - {path: "ClassMethod[key.name='showTutorial'] VariableDeclarator[id.name='n'] > Identifier", rename: "desktopHtml"}
+    - {path: "ClassMethod[key.name='showTutorial'] VariableDeclarator[id.name='r'] > Identifier", rename: "mobileHtml"}
+    - {path: "ClassMethod[key.name='showTutorial'] VariableDeclarator[id.name='l'] > Identifier", rename: "backButtonHtml"}
+    - {path: "ClassMethod[key.name='showTutorial'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassMethod[key.name='showTutorial'] ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "scrollDelta"}
+    - {path: "ClassMethod[key.name='nextTutorialStep'] VariableDeclarator[id.name='e'] > Identifier", rename: "stepHtml"}
+    - {path: "ClassMethod[key.name='setProgress'] > Identifier[name='e']", rename: "progress"}
+    - {path: "ClassMethod[key.name='initLevel'] > AssignmentPattern[left.name='e'] > Identifier", rename: "showPlayButton"}
+    - {path: "ClassMethod[key.name='updateLevelArrows'] VariableDeclarator[id.name='e'] > Identifier", rename: "validStates"}
+    - {path: "ClassMethod[key.name='updateLevelArrows'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "index"}
+    - {path: "ClassMethod[key.name='updateLevelArrows'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "levelArrow"}
+    - {path: "ClassMethod[key.name='complete']", rename: "levelInfo"}
+    - {path: "ClassProperty[key.name='runLevel'] AssignmentExpression[left.property.name='levelRights']", rename: "currentAccess"}
+    - {path: "ClassProperty[key.name='replaceInlineArrows'] ArrowFunctionExpression > Identifier[name='e']", rename: "match"}
+    - {path: "ClassProperty[key.name='replaceInlineArrows'] VariableDeclarator[id.name='t'] > Identifier", rename: "typeMatch"}
+    - {path: "ClassProperty[key.name='replaceInlineArrows'] VariableDeclarator[id.name='s'] > Identifier", rename: "arrowType"}
+    - {path: "ClassProperty[key.name='replaceInlineArrows'] VariableDeclarator[id.name='o'] > Identifier", rename: "textMatch"}
+    - {path: "ClassProperty[key.name='replaceInlineArrows'] VariableDeclarator[id.name='a'] > Identifier", rename: "arrowName"}
+    - {path: "ClassProperty[key.name='replaceInlineTools'] ArrowFunctionExpression > Identifier[name='e']", rename: "match"}
+    - {path: "ClassProperty[key.name='replaceInlineTools'] VariableDeclarator[id.name='t'] > Identifier", rename: "toolMatch"}
+    - {path: "ClassProperty[key.name='replaceInlineTools'] VariableDeclarator[id.name='s'] > Identifier", rename: "toolId"}
+    - {path: "ClassProperty[key.name='replaceInlineTools'] VariableDeclarator[id.name='i'] > Identifier", rename: "textMatch"}
+    - {path: "ClassProperty[key.name='replaceInlineTools'] VariableDeclarator[id.name='o'] > Identifier", rename: "toolName"}
+    - {path: "ClassProperty[key.name='replaceInlineKeys'] ArrowFunctionExpression > Identifier[name='e']", rename: "keyText"}
+    - {path: "ClassProperty[key.name='replaceInlineSpoilers'] ArrowFunctionExpression > Identifier[name='e']", rename: "html"}
+    - {path: "ClassProperty[key.name='replaceInlineSpoilers'] VariableDeclarator[id.name='t'] > Identifier", rename: "spoilerStart"}
+    - {path: "ClassProperty[key.name='replaceInlineSpoilers'] VariableDeclarator[id.name='s'] > Identifier", rename: "spoilerEnd"}
+    - {path: "ClassProperty[key.name='replaceInlineSpoilers'] VariableDeclarator[id.name='i'] > Identifier", rename: "depth"}
+    - {path: "ClassProperty[key.name='replaceInlineSpoilers'] VariableDeclarator[id.name='o'] > Identifier", rename: "charIndex"}
+    - {path: "ClassProperty[key.name='replaceInlineSpoilers'] VariableDeclarator[id.name='a'] > Identifier", rename: "spoilerHtml"}
+
+  GameMap:
+    - {path: "ClassMethod[key.name='setArrowType'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='setArrowType'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='setArrowType'] > Identifier[name='s']", rename: "type"}
+    - {path: "ClassMethod[key.name='setArrowType'] > AssignmentPattern[left.name='o'] > Identifier", rename: "checkEditable"}
+    - {path: "ClassMethod[key.name='setArrowType'] VariableDeclarator[id.name='n'] > Identifier", rename: "chunk"}
+    - {path: "ClassMethod[key.name='setArrowType'] VariableDeclarator[id.name='r'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='setArrowType'] VariableDeclarator[id.name='l'] > Identifier", rename: "oldType"}
+    - {path: "ClassMethod[key.name='setArrowSignal'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='setArrowSignal'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='setArrowSignal'] > Identifier[name='s']", rename: "signal"}
+    - {path: "ClassMethod[key.name='setArrowSignal'] VariableDeclarator[id.name='i'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='setArrowSignal'] IfStatement VariableDeclarator[id.name='s'] > Identifier", rename: "chunk"}
+    - {path: "ClassMethod[key.name='setArrowRotation'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='setArrowRotation'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='setArrowRotation'] > Identifier[name='s']", rename: "rotation"}
+    - {path: "ClassMethod[key.name='setArrowRotation'] > AssignmentPattern[left.name='o'] > Identifier", rename: "checkEditable"}
+    - {path: "ClassMethod[key.name='setArrowRotation'] VariableDeclarator[id.name='a'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='setArrowRotation'] IfStatement VariableDeclarator[id.name='s'] > Identifier", rename: "chunk"}
+    - {path: "ClassMethod[key.name='setArrowFlipped'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='setArrowFlipped'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='setArrowFlipped'] > Identifier[name='s']", rename: "flipped"}
+    - {path: "ClassMethod[key.name='setArrowFlipped'] > AssignmentPattern[left.name='o'] > Identifier", rename: "checkEditable"}
+    - {path: "ClassMethod[key.name='setArrowFlipped'] VariableDeclarator[id.name='a'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='setArrowFlipped'] IfStatement VariableDeclarator[id.name='s'] > Identifier", rename: "chunk"}
+    - {path: "ClassMethod[key.name='getArrowType'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='getArrowType'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='getArrowType'] VariableDeclarator[id.name='s'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='removeArrow'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='removeArrow'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='removeArrow'] > AssignmentPattern[left.name='s'] > Identifier", rename: "checkEditable"}
+    - {path: "ClassMethod[key.name='removeArrow'] VariableDeclarator[id.name='o'] > Identifier", rename: "chunk"}
+    - {path: "ClassMethod[key.name='removeArrow'] VariableDeclarator[id.name='a'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='removeArrow'] IfStatement VariableDeclarator[id.name='e'] > Identifier", rename: "hadContent"}
+    - {path: "ClassMethod[key.name='getArrow'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='getArrow'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='getArrow'] VariableDeclarator[id.name='s'] > Identifier", rename: "chunk"}
+    - {path: "ClassMethod[key.name='getChunk'] > Identifier[name='e']", rename: "chunkX"}
+    - {path: "ClassMethod[key.name='getChunk'] > Identifier[name='t']", rename: "chunkY"}
+    - {path: "ClassMethod[key.name='getChunk'] VariableDeclarator[id.name='s'] > Identifier", rename: "key"}
+    - {path: "ClassMethod[key.name='getOrCreateChunk'] > Identifier[name='e']", rename: "chunkX"}
+    - {path: "ClassMethod[key.name='getOrCreateChunk'] > Identifier[name='t']", rename: "chunkY"}
+    - {path: "ClassMethod[key.name='getOrCreateChunk'] VariableDeclarator[id.name='s'] > Identifier", rename: "key"}
+    - {path: "ClassMethod[key.name='getOrCreateChunk'] VariableDeclarator[id.name='i'] > Identifier", rename: "existing"}
+    - {path: "ClassMethod[key.name='getOrCreateChunk'] VariableDeclarator[id.name='a'] > Identifier", rename: "chunk"}
+    - {path: "ClassMethod[key.name='getOrCreateChunk'] VariableDeclarator[id.name='n'] > Identifier", rename: "neighbors"}
+    - {path: "ClassMethod[key.name='getOrCreateChunk'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "directionIndex"}
+    - {path: "ClassMethod[key.name='getOrCreateChunk'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "neighbor"}
+    - {path: "ClassMethod[key.name='clear'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='e']", rename: "chunk"}
+    - {path: "ClassMethod[key.name='getChunkByArrowCoordinates'] > Identifier[name='e']", rename: "arrowX"}
+    - {path: "ClassMethod[key.name='getChunkByArrowCoordinates'] > Identifier[name='t']", rename: "arrowY"}
+    - {path: "ClassMethod[key.name='getChunkByArrowCoordinates'] VariableDeclarator[id.name='s'] > Identifier", rename: "chunkX"}
+    - {path: "ClassMethod[key.name='getChunkByArrowCoordinates'] VariableDeclarator[id.name='i'] > Identifier", rename: "chunkY"}
+    - {path: "ClassMethod[key.name='clearChunkIfEmpty'] > Identifier[name='e']", rename: "chunk"}
+    - {path: "ClassMethod[key.name='clearChunkIfEmpty'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "directionIndex"}
+    - {path: "ClassMethod[key.name='clearChunkIfEmpty'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "neighbor"}
+    - {path: "ClassMethod[key.name='setLevelArrow'] > Identifier[name='e']", rename: "levelArrow"}
+    - {path: "ClassMethod[key.name='setLevelArrow'] VariableDeclarator[id.name='t'] > Identifier", rename: "chunk"}
+    - {path: "ClassMethod[key.name='setLevelArrow'] VariableDeclarator[id.name='s'] > Identifier", rename: "index"}
+    - {path: "ClassMethod[key.name='setLevelArrow'] VariableDeclarator[id.name='i'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='getOrCreateChunkByArrowCoordinates'] > Identifier[name='e']", rename: "arrowX"}
+    - {path: "ClassMethod[key.name='getOrCreateChunkByArrowCoordinates'] > Identifier[name='t']", rename: "arrowY"}
+    - {path: "ClassMethod[key.name='getOrCreateChunkByArrowCoordinates'] VariableDeclarator[id.name='s'] > Identifier", rename: "chunkX"}
+    - {path: "ClassMethod[key.name='getOrCreateChunkByArrowCoordinates'] VariableDeclarator[id.name='i'] > Identifier", rename: "chunkY"}
+    - {path: "ClassMethod[key.name='getArrowForEditing'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='getArrowForEditing'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='getArrowForEditing'] VariableDeclarator[id.name='s'] > Identifier", rename: "chunk"}
+
+  KeyboardHandler:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "onKeyDown"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "onKeyUp"}
+    - {path: "ClassMethod[key.name='getKeyPressed'] > Identifier[name='e']", rename: "code"}
+    - {path: "ClassMethod[key.name='getCharPressed'] > Identifier[name='e']", rename: "char"}
+    - {path: "ClassProperty[key.name='keyDown'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassProperty[key.name='keyUp'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+
+  GameRender:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "canvas"}
+    - {path: "ClassMethod[key.name='resize'] > Identifier[name='e']", rename: "width"}
+    - {path: "ClassMethod[key.name='resize'] > Identifier[name='t']", rename: "height"}
+    - {path: "ClassMethod[key.name='setArrowSize'] > Identifier[name='e']", rename: "size"}
+    - {path: "ClassMethod[key.name='setArrowAlpha'] > Identifier[name='e']", rename: "alpha"}
+    - {path: "ClassMethod[key.name='setChunkArrowSize'] > Identifier[name='e']", rename: "size"}
+    - {path: "ClassMethod[key.name='setChunkArrowAlpha'] > Identifier[name='e']", rename: "alpha"}
+    - {path: "ClassMethod[key.name='setChunkArrowOffset'] > Identifier[name='e']", rename: "offsetX"}
+    - {path: "ClassMethod[key.name='setChunkArrowOffset'] > Identifier[name='t']", rename: "offsetY"}
+    - {path: "ClassMethod[key.name='drawArrow'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='drawArrow'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='drawArrow'] > Identifier[name='s']", rename: "arrowType"}
+    - {path: "ClassMethod[key.name='drawArrow'] > Identifier[name='i']", rename: "signal"}
+    - {path: "ClassMethod[key.name='drawArrow'] > Identifier[name='o']", rename: "rotation"}
+    - {path: "ClassMethod[key.name='drawArrow'] > Identifier[name='a']", rename: "flipped"}
+    - {path: "ClassMethod[key.name='drawArrow'] IfStatement BlockStatement VariableDeclarator[id.name='e'] > Identifier", rename: "spriteX"}
+    - {path: "ClassMethod[key.name='drawArrow'] IfStatement BlockStatement VariableDeclarator[id.name='t'] > Identifier", rename: "spriteY"}
+    - {path: "ClassMethod[key.name='hasChunkMesh'] > Identifier[name='e']", rename: "key"}
+    - {path: "ClassMethod[key.name='updateChunkMesh'] > Identifier[name='e']", rename: "key"}
+    - {path: "ClassMethod[key.name='updateChunkMesh'] > Identifier[name='t']", rename: "vertices"}
+    - {path: "ClassMethod[key.name='updateChunkMesh'] > Identifier[name='s']", rename: "indices"}
+    - {path: "ClassMethod[key.name='updateChunkMesh'] VariableDeclarator[id.name='i'] > Identifier", rename: "gl"}
+    - {path: "ClassMethod[key.name='updateChunkMesh'] VariableDeclarator[id.name='o'] > Identifier", rename: "mesh"}
+    - {path: "ClassMethod[key.name='drawChunkMesh'] > Identifier[name='e']", rename: "key"}
+    - {path: "ClassMethod[key.name='drawChunkMesh'] VariableDeclarator[id.name='t'] > Identifier", rename: "mesh"}
+    - {path: "ClassMethod[key.name='drawChunkMesh'] VariableDeclarator[id.name='s'] > Identifier", rename: "gl"}
+    - {path: "ClassMethod[key.name='removeMissingChunkMeshes'] > Identifier[name='e']", rename: "validKeys"}
+    - {path: "ClassMethod[key.name='removeMissingChunkMeshes'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='t']", rename: "mesh"}
+    - {path: "ClassMethod[key.name='removeMissingChunkMeshes'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='s']", rename: "key"}
+    - {path: "ClassMethod[key.name='drawBackground'] > Identifier[name='e']", rename: "scale"}
+    - {path: "ClassMethod[key.name='drawBackground'] > Identifier[name='t']", rename: "offset"}
+    - {path: "ClassMethod[key.name='drawBackground'] VariableDeclarator[id.name='s'] > Identifier", rename: "tileSize"}
+    - {path: "ClassMethod[key.name='drawBackground'] VariableDeclarator[id.name='i'] > Identifier", rename: "tilesX"}
+    - {path: "ClassMethod[key.name='drawBackground'] VariableDeclarator[id.name='o'] > Identifier", rename: "tilesY"}
+    - {path: "ClassMethod[key.name='drawBackground'] VariableDeclarator[id.name='a'] > Identifier", rename: "startTileX"}
+    - {path: "ClassMethod[key.name='drawBackground'] VariableDeclarator[id.name='n'] > Identifier", rename: "startTileY"}
+    - {path: "ClassMethod[key.name='drawBackground'] ForStatement[init.declarations.0.id.name='r'] ForStatement[init.declarations.0.id.name='i'] VariableDeclarator[id.name='o'] > Identifier", rename: "drawX"}
+    - {path: "ClassMethod[key.name='drawBackground'] ForStatement[init.declarations.0.id.name='r'] ForStatement[init.declarations.0.id.name='i'] VariableDeclarator[id.name='l'] > Identifier", rename: "drawY"}
+    - {path: "ClassMethod[key.name='drawBackgroundTexture'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='drawBackgroundTexture'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='setSolidColor'] > Identifier[name='e']", rename: "r"}
+    - {path: "ClassMethod[key.name='setSolidColor'] > Identifier[name='t']", rename: "g"}
+    - {path: "ClassMethod[key.name='setSolidColor'] > Identifier[name='s']", rename: "b"}
+    - {path: "ClassMethod[key.name='setSolidColor'] > Identifier[name='i']", rename: "a"}
+    - {path: "ClassMethod[key.name='drawSolidColorRect'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='drawSolidColorRect'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='drawSolidColorRect'] > Identifier[name='s']", rename: "width"}
+    - {path: "ClassMethod[key.name='drawSolidColorRect'] > Identifier[name='i']", rename: "height"}
+    - {path: "ClassMethod[key.name='createChunkMesh'] VariableDeclarator[id.name='e'] > Identifier", rename: "gl"}
+    - {path: "ClassMethod[key.name='createChunkMesh'] VariableDeclarator[id.name='t'] > Identifier", rename: "vao"}
+    - {path: "ClassMethod[key.name='createChunkMesh'] VariableDeclarator[id.name='s'] > Identifier", rename: "vbo"}
+    - {path: "ClassMethod[key.name='createChunkMesh'] VariableDeclarator[id.name='i'] > Identifier", rename: "ibo"}
+    - {path: "ClassMethod[key.name='createChunkMesh'] VariableDeclarator[id.name='o'] > Identifier", rename: "positionLoc"}
+    - {path: "ClassMethod[key.name='createChunkMesh'] VariableDeclarator[id.name='a'] > Identifier", rename: "texcoordLoc"}
+    - {path: "ClassMethod[key.name='createChunkMesh'] VariableDeclarator[id.name='n'] > Identifier", rename: "signalLoc"}
+    - {path: "ClassMethod[key.name='disposeChunkMesh'] > Identifier[name='e']", rename: "key"}
+    - {path: "ClassMethod[key.name='disposeChunkMesh'] VariableDeclarator[id.name='t'] > Identifier", rename: "mesh"}
+    - {path: "ClassMethod[key.name='disposeChunkMesh'] VariableDeclarator[id.name='s'] > Identifier", rename: "gl"}
+    - {path: "ClassMethod[key.name='disposeChunkMeshes'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='t']", rename: "mesh"}
+    - {path: "ClassMethod[key.name='initShaders'] VariableDeclarator[id.name='e'] > Identifier", rename: "vertexSrc"}
+    - {path: "ClassMethod[key.name='initShaders'] VariableDeclarator[id.name='t'] > Identifier", rename: "spriteVertSrc"}
+    - {path: "ClassMethod[key.name='initShaders'] VariableDeclarator[id.name='s'] > Identifier", rename: "chunkVertSrc"}
+    - {path: "ClassMethod[key.name='initShaders'] VariableDeclarator[id.name='i'] > Identifier", rename: "gridTileFragSrc"}
+    - {path: "ClassMethod[key.name='initShaders'] VariableDeclarator[id.name='n'] > Identifier", rename: "arrowFragSrc"}
+    - {path: "ClassMethod[key.name='initShaders'] VariableDeclarator[id.name='r'] > Identifier", rename: "chunkFragSrc"}
+    - {path: "ClassMethod[key.name='initShaders'] VariableDeclarator[id.name='l'] > Identifier", rename: "gridGenFragSrc"}
+    - {path: "ClassMethod[key.name='initShaders'] VariableDeclarator[id.name='h'] > Identifier", rename: "solidColorFragSrc"}
+    - {path: "ClassMethod[key.name='createRenderTextures'] VariableDeclarator[id.name='e'] > Identifier", rename: "options"}
+
+  save:
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression > Identifier[name='e']", rename: "gameMap"}
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "bytes"}
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='e']", rename: "chunk"}
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "types"}
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "xBytes"}
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='a'] > Identifier", rename: "yBytes"}
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='s']", rename: "arrowType"}
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "countIndex"}
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ForStatement VariableDeclarator[id.name='o'] > Identifier", rename: "cellX"}
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ForStatement VariableDeclarator[id.name='n'] > Identifier", rename: "cellY"}
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ForStatement VariableDeclarator[id.name='i'] > Identifier", rename: "arrow"}
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "positionByte"}
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "stateByte"}
+    - {path: "AssignmentExpression[left.property.name='save'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='a'] > Identifier", rename: "count"}
+
+  LangSettings:
+    - {path: "VariableDeclarator[id.name='s'] > Identifier[name='s']", rename: "LangSettings"}
+    - {path: "VariableDeclarator[id.name='t'] > Identifier[name='t']", rename: "currentLanguage"}
+    - {path: "AssignmentExpression[left.property.name='setLanguage'] FunctionExpression > Identifier[name='s']", rename: "language"}
+
+  PerformancePage:
+    - {path: "ClassMethod[key.name='start'] VariableDeclarator[id.name='e'] > Identifier", rename: "cellSize"}
+    - {path: "ClassMethod[key.name='start'] VariableDeclarator[id.name='t'] > Identifier", rename: "cols"}
+    - {path: "ClassMethod[key.name='start'] VariableDeclarator[id.name='s'] > Identifier", rename: "rows"}
+    - {path: "ClassMethod[key.name='start'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "x"}
+    - {path: "ClassMethod[key.name='start'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "y"}
+    - {path: "ClassMethod[key.name='start'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "arrowType"}
+    - {path: "ClassMethod[key.name='start'] ForStatement VariableDeclarator[id.name='i'] > Identifier", rename: "rotation"}
+    - {path: "ClassMethod[key.name='start'] ForStatement VariableDeclarator[id.name='o'] > Identifier", rename: "flipped"}
+    - {path: "ClassMethod[key.name='measureUpdate'] VariableDeclarator[id.name='e'] > Identifier", rename: "startTime"}
+    - {path: "ClassMethod[key.name='measureUpdate'] VariableDeclarator[id.name='t'] > Identifier", rename: "endTime"}
+    - {path: "ClassMethod[key.name='measureDraw'] VariableDeclarator[id.name='e'] > Identifier", rename: "startTime"}
+    - {path: "ClassMethod[key.name='measureDraw'] VariableDeclarator[id.name='t'] > Identifier", rename: "endTime"}
+
+  Navigation:
+    - {path: "ClassProperty[key.name='startGameAction']", rename: "startGameHandler"}
+    - {path: "ClassProperty[key.name='reloadLoginPage']", rename: "reloadLoginHandler"}
+    - {path: "ClassMethod[key.name='goToMaps'] > Identifier[name='e']", rename: "action"}
+    - {path: "ClassMethod[key.name='goToLogin'] > Identifier[name='e']", rename: "action"}
+    - {path: "ClassMethod[key.name='goToGame'] > Identifier[name='e']", rename: "action"}
+    - {path: "ClassMethod[key.name='goToGame'] > Identifier[name='t']", rename: "mapInfo"}
+    - {path: "ClassMethod[key.name='goToPerformance'] > Identifier[name='e']", rename: "action"}
+    - {path: "ClassMethod[key.name='goToNameChange'] > Identifier[name='e']", rename: "action"}
+    - {path: "ClassMethod[key.name='goToLevel'] > Identifier[name='e']", rename: "action"}
+    - {path: "ClassMethod[key.name='goToLevel'] > Identifier[name='t']", rename: "levelId"}
+    - {path: "ClassMethod[key.name='goToLevel'] VariableDeclarator[id.name='s'] > Identifier", rename: "levelInfo"}
+    - {path: "ClassMethod[key.name='goToPath'] > Identifier[name='e']", rename: "action"}
+    - {path: "ClassMethod[key.name='goToPath'] VariableDeclarator[id.name='t'] > Identifier", rename: "mapId"}
+    - {path: "ClassMethod[key.name='goToAccount'] > Identifier[name='e']", rename: "action"}
+    - {path: "ClassMethod[key.name='goToLevels'] > Identifier[name='e']", rename: "action"}
+    - {path: "ClassMethod[key.name='goToGuide'] > Identifier[name='e']", rename: "action"}
+    - {path: "ClassMethod[key.name='goToSettings'] > Identifier[name='e']", rename: "action"}
+    - {path: "ClassProperty[key.name='doMenuAction'] ArrowFunctionExpression > Identifier[name='e']", rename: "category"}
+    - {path: "ClassMethod[key.name='start'] CallExpression[callee.property.name='checkUser'] ArrowFunctionExpression:first-child VariableDeclarator[id.name='e'] > Identifier", rename: "completedLevels"}
+
+  PlayerControls:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "canvas"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "game"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "playerUI"}
+    - {path: "ClassMethod[key.name='constructor'] > AssignmentPattern[left.name='a'] > Identifier", rename: "history"}
+    - {path: "ClassMethod[key.name='updatePlayerAccess'] > Identifier[name='e']", rename: "accessOverrides"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='e'] > Identifier", rename: "mousePos"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='t'] > Identifier", rename: "cursorX"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='s'] > Identifier", rename: "cursorY"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='i'] > Identifier", rename: "cellX"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='o'] > Identifier", rename: "cellY"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='r'] > Identifier", rename: "shiftPressed"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='l'] > Identifier", rename: "ctrlPressed"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='h'] > Identifier", rename: "activeArrowType"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='c'] > Identifier", rename: "freeCursor"}
+    - {path: "ClassMethod[key.name='update'] IfStatement BlockStatement VariableDeclarator[id.name='a'] > Identifier", rename: "isMultitouch"}
+    - {path: "ClassMethod[key.name='update'] IfStatement BlockStatement VariableDeclarator[id.name='d'] > Identifier", rename: "toolbarMode"}
+    - {path: "ClassMethod[key.name='update'] IfStatement BlockStatement VariableDeclarator[id.name='u'] > Identifier", rename: "isSelectionMode"}
+    - {path: "ClassMethod[key.name='update'] IfStatement BlockStatement VariableDeclarator[id.name='g'] > Identifier", rename: "isPasteMode"}
+    - {path: "ClassMethod[key.name='update'] IfStatement BlockStatement IfStatement VariableDeclarator[id.name='e'] > Identifier", rename: "lastSetPos"}
+    - {path: "ClassMethod[key.name='update'] IfStatement BlockStatement IfStatement VariableDeclarator[id.name='c'] > Identifier", rename: "canPlaceAtNewCell"}
+    - {path: "ClassMethod[key.name='update'] IfStatement BlockStatement IfStatement VariableDeclarator[id.name='g'] > Identifier", rename: "isToolMode"}
+    - {path: "ClassMethod[key.name='update'] IfStatement BlockStatement IfStatement VariableDeclarator[id.name='m'] > Identifier", rename: "isRotateTool"}
+    - {path: "ClassMethod[key.name='update'] IfStatement BlockStatement IfStatement VariableDeclarator[id.name='p'] > Identifier", rename: "isDeleteTool"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='d'] > Identifier", rename: "arrowUnderCursor"}
+    - {path: "ClassMethod[key.name='dispose']", rename: "disposeHandler"}
+    - {path: "ClassMethod[key.name='updateUndoButton'] VariableDeclarator[id.name='e'] > Identifier", rename: "canUndo"}
+    - {path: "ClassMethod[key.name='updateRedoButton'] VariableDeclarator[id.name='e'] > Identifier", rename: "canRedo"}
+    - {path: "ClassMethod[key.name='updateToolbarState'] VariableDeclarator[id.name='e'] > Identifier", rename: "toolbarMode"}
+    - {path: "ClassProperty[key.name='keyDownCallback'] ArrowFunctionExpression > Identifier[name='e']", rename: "code"}
+    - {path: "ClassProperty[key.name='keyDownCallback'] VariableDeclarator[id.name='t'] > Identifier", rename: "shiftPressed"}
+    - {path: "ClassProperty[key.name='keyDownCallback'] VariableDeclarator[id.name='s'] > Identifier", rename: "ctrlPressed"}
+    - {path: "ClassProperty[key.name='keyDownCallback'] VariableDeclarator[id.name='i'] > Identifier", rename: "currentGroup"}
+    - {path: "ClassProperty[key.name='keyDownCallback'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "groupIndex"}
+    - {path: "ClassProperty[key.name='keyDownCallback'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "arrowType"}
+    - {path: "ClassProperty[key.name='keyDownCallback'] IfStatement VariableDeclarator[id.name='e'] > Identifier", rename: "centerX"}
+    - {path: "ClassProperty[key.name='keyDownCallback'] IfStatement VariableDeclarator[id.name='t'] > Identifier", rename: "centerY"}
+    - {path: "ClassProperty[key.name='keyUpCallback'] ArrowFunctionExpression > Identifier[name='e']", rename: "code"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] VariableDeclarator[id.name='e'] > Identifier", rename: "arrowUnderCursor"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] VariableDeclarator[id.name='t'] > Identifier", rename: "shiftPressed"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] VariableDeclarator[id.name='s'] > Identifier", rename: "isMultitouch"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] VariableDeclarator[id.name='i'] > Identifier", rename: "activeArrowType"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] VariableDeclarator[id.name='o'] > Identifier", rename: "freeCursor"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] IfStatement VariableDeclarator[id.name='e'] > Identifier", rename: "mousePos"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] IfStatement VariableDeclarator[id.name='t'] > Identifier", rename: "cursorX"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] IfStatement VariableDeclarator[id.name='s'] > Identifier", rename: "cursorY"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] IfStatement VariableDeclarator[id.name='o'] > Identifier", rename: "cellX"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] IfStatement VariableDeclarator[id.name='n'] > Identifier", rename: "cellY"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] IfStatement VariableDeclarator[id.name='r'] > Identifier", rename: "toolbarMode"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] IfStatement BlockStatement VariableDeclarator[id.name='t'] > Identifier", rename: "newSignal"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] IfStatement BlockStatement VariableDeclarator[id.name='s'] > Identifier", rename: "signalChanged"}
+    - {path: "ClassProperty[key.name='leftClickCallback'] IfStatement BlockStatement VariableDeclarator[id.name='a'] > Identifier", rename: "chunk"}
+    - {path: "ClassProperty[key.name='wheelCallback'] ArrowFunctionExpression > Identifier[name='e']", rename: "deltaY"}
+    - {path: "ClassProperty[key.name='twoFingerCallback'] ArrowFunctionExpression > Identifier[name='e']", rename: "scale"}
+    - {path: "ClassProperty[key.name='twoFingerCallback'] ArrowFunctionExpression > Identifier[name='t']", rename: "panX"}
+    - {path: "ClassProperty[key.name='twoFingerCallback'] ArrowFunctionExpression > Identifier[name='s']", rename: "panY"}
+    - {path: "ClassProperty[key.name='twoFingerCallback'] ArrowFunctionExpression > Identifier[name='i']", rename: "centerX"}
+    - {path: "ClassProperty[key.name='twoFingerCallback'] ArrowFunctionExpression > Identifier[name='o']", rename: "centerY"}
+    - {path: "ClassProperty[key.name='twoFingerCallback'] BlockStatement VariableDeclarator[id.name='t'] > Identifier", rename: "newScale"}
+    - {path: "ClassProperty[key.name='twoFingerCallback'] BlockStatement VariableDeclarator[id.name='s'] > Identifier", rename: "minScale"}
+    - {path: "ClassProperty[key.name='longPressCallback'] VariableDeclarator[id.name='e'] > Identifier", rename: "toolbarMode"}
+    - {path: "ClassProperty[key.name='longPressCallback'] VariableDeclarator[id.name='t'] > Identifier", rename: "activeArrowType"}
+    - {path: "ClassProperty[key.name='longPressCallback'] VariableDeclarator[id.name='s'] > Identifier", rename: "arrowUnderCursor"}
+    - {path: "ClassMethod[key.name='undo'] VariableDeclarator[id.name='e'] > Identifier", rename: "mapAction"}
+    - {path: "ClassMethod[key.name='redo'] VariableDeclarator[id.name='e'] > Identifier", rename: "mapAction"}
+    - {path: "ClassMethod[key.name='moveCamera'] > Identifier[name='e']", rename: "mouseX"}
+    - {path: "ClassMethod[key.name='moveCamera'] > Identifier[name='t']", rename: "mouseY"}
+    - {path: "ClassMethod[key.name='handleZoom'] > Identifier[name='e']", rename: "wheelDelta"}
+    - {path: "ClassMethod[key.name='handleZoom'] > Identifier[name='t']", rename: "zoomToCursor"}
+    - {path: "ClassMethod[key.name='handleZoom'] VariableDeclarator[id.name='s'] > Identifier", rename: "zoomCenter"}
+    - {path: "ClassMethod[key.name='handleZoom'] VariableDeclarator[id.name='i'] > Identifier", rename: "newScale"}
+    - {path: "ClassMethod[key.name='handleZoom'] VariableDeclarator[id.name='o'] > Identifier", rename: "minScale"}
+    - {path: "ClassMethod[key.name='pickArrow'] VariableDeclarator[id.name='e'] > Identifier", rename: "arrowUnderCursor"}
+
+  AuthState:
+    - {path: "VariableDeclarator[id.name='o'] > Identifier[name='o']", rename: "authModeKey"}
+    - {path: "VariableDeclarator[id.name='a'] > Identifier[name='a']", rename: "authUserNameKey"}
+    - {path: "ClassMethod[key.name='init'] VariableDeclarator[id.name='e'] > Identifier", rename: "storedMode"}
+    - {path: "ClassMethod[key.name='init'] VariableDeclarator[id.name='t'] > Identifier", rename: "storedUserName"}
+    - {path: "ClassMethod[key.name='setCookieUser'] > Identifier[name='e']", rename: "userName"}
+    - {path: "ClassMethod[key.name='apply'] > Identifier[name='e']", rename: "mode"}
+    - {path: "ClassMethod[key.name='apply'] > Identifier[name='t']", rename: "userName"}
+    - {path: "ClassMethod[key.name='persist'] > Identifier[name='e']", rename: "mode"}
+    - {path: "ClassMethod[key.name='persist'] > Identifier[name='t']", rename: "userName"}
+
+  ChunkUpdates:
+    - {path: "VariableDeclarator[id.name='o'] > Identifier[name='o']", rename: "ChunkUpdates"}
+    - {path: "CallExpression > FunctionExpression > Identifier[name='e']", rename: "chunkUpdatesExports"}
+    - {path: "FunctionDeclaration[id.name='n'] > Identifier[name='e']", rename: "arrow"}
+    - {path: "FunctionDeclaration[id.name='r'] > Identifier[name='e']", rename: "arrow"}
+    - {path: "FunctionDeclaration[id.name='l'] > Identifier[name='e']", rename: "arrow"}
+    - {path: "FunctionDeclaration[id.name='h'] > Identifier[name='e']", rename: "chunk"}
+    - {path: "FunctionDeclaration[id.name='h'] > Identifier[name='t']", rename: "x"}
+    - {path: "FunctionDeclaration[id.name='h'] > Identifier[name='s']", rename: "y"}
+    - {path: "FunctionDeclaration[id.name='h'] > Identifier[name='a']", rename: "rotation"}
+    - {path: "FunctionDeclaration[id.name='h'] > Identifier[name='n']", rename: "flipped"}
+    - {path: "FunctionDeclaration[id.name='h'] > AssignmentPattern[left.name='r'] > Identifier", rename: "forwardSteps"}
+    - {path: "FunctionDeclaration[id.name='h'] > AssignmentPattern[left.name='l'] > Identifier", rename: "sideOffset"}
+    - {path: "FunctionDeclaration[id.name='h'] > AssignmentPattern[left.name='h'] > Identifier", rename: "markUpdated"}
+    - {path: "FunctionDeclaration[id.name='h'] VariableDeclarator[id.name='c'] > Identifier", rename: "sideSigned"}
+    - {path: "FunctionDeclaration[id.name='h'] VariableDeclarator[id.name='d'] > Identifier", rename: "targetX"}
+    - {path: "FunctionDeclaration[id.name='h'] VariableDeclarator[id.name='u'] > Identifier", rename: "targetY"}
+    - {path: "FunctionDeclaration[id.name='h'] VariableDeclarator[id.name='g'] > Identifier", rename: "chunkDX"}
+    - {path: "FunctionDeclaration[id.name='h'] VariableDeclarator[id.name='m'] > Identifier", rename: "chunkDY"}
+    - {path: "FunctionDeclaration[id.name='h'] VariableDeclarator[id.name='p'] > Identifier", rename: "targetChunk"}
+    - {path: "FunctionDeclaration[id.name='h'] IfStatement VariableDeclarator[id.name='t'] > Identifier", rename: "neighborX"}
+    - {path: "FunctionDeclaration[id.name='h'] IfStatement VariableDeclarator[id.name='s'] > Identifier", rename: "neighborY"}
+    - {path: "FunctionDeclaration[id.name='h'] IfStatement VariableDeclarator[id.name='i'] > Identifier", rename: "neighborIndex"}
+    - {path: "FunctionDeclaration[id.name='c'] > Identifier[name='e']", rename: "arrow"}
+    - {path: "AssignmentExpression[left.property.name='update'] FunctionExpression > Identifier[name='e']", rename: "gameMap"}
+    - {path: "AssignmentExpression[left.property.name='update'] FunctionExpression FunctionExpression > Identifier[name='e']", rename: "chunk"}
+    - {path: "AssignmentExpression[left.property.name='update'] FunctionExpression FunctionExpression ForStatement[init.declarations.0.id.name='t'] VariableDeclarator[id.name='s'] > Identifier", rename: "arrow"}
+    - {path: "AssignmentExpression[left.property.name='update'] FunctionExpression FunctionExpression ForStatement[init.declarations.0.id.name='t'] VariableDeclarator[id.name='o'] > Identifier", rename: "behavior"}
+    - {path: "AssignmentExpression[left.property.name='update'] FunctionExpression FunctionExpression ForStatement[init.declarations.0.id.name='t'] VariableDeclarator[id.name='r'] > Identifier", rename: "cellX"}
+    - {path: "AssignmentExpression[left.property.name='update'] FunctionExpression FunctionExpression ForStatement[init.declarations.0.id.name='t'] VariableDeclarator[id.name='c'] > Identifier", rename: "cellY"}
+    - {path: "AssignmentExpression[left.property.name='clearSignals'] FunctionExpression > Identifier[name='e']", rename: "gameMap"}
+    - {path: "AssignmentExpression[left.property.name='clearSignals'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='e']", rename: "chunk"}
+    - {path: "AssignmentExpression[left.property.name='clearSignals'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "cellX"}
+    - {path: "AssignmentExpression[left.property.name='clearSignals'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "cellY"}
+    - {path: "AssignmentExpression[left.property.name='clearSignals'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ForStatement VariableDeclarator[id.name='i'] > Identifier", rename: "arrow"}
+    - {path: "AssignmentExpression[left.property.name='clearSignals'] FunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='e']", rename: "levelArrow"}
+
+  ControlsHintsText:
+    - {path: "VariableDeclarator[id.name='o'] > Identifier[name='o']", rename: "ControlsHintsText"}
+    - {path: "CallExpression > FunctionExpression > Identifier[name='e']", rename: "controlsHintsExports"}
+
+  PlayerOverlay:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "canvasDiv"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "game"}
+    - {path: "ClassMethod[key.name='addText'] > Identifier[name='e']", rename: "text"}
+    - {path: "ClassMethod[key.name='addText'] > Identifier[name='t']", rename: "x"}
+    - {path: "ClassMethod[key.name='addText'] > Identifier[name='s']", rename: "y"}
+    - {path: "ClassMethod[key.name='addText'] > Identifier[name='n']", rename: "width"}
+    - {path: "ClassMethod[key.name='addText'] > Identifier[name='o']", rename: "height"}
+    - {path: "ClassMethod[key.name='addText'] > Identifier[name='a']", rename: "textSize"}
+    - {path: "ClassMethod[key.name='addText'] VariableDeclarator[id.name='r'] > Identifier", rename: "overlayText"}
+    - {path: "ClassMethod[key.name='addLevel'] > Identifier[name='e']", rename: "overlayLevel"}
+    - {path: "ClassMethod[key.name='addLevel'] VariableDeclarator[id.name='t'] > Identifier", rename: "rect"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='e'] > Identifier", rename: "deviceScale"}
+    - {path: "ClassMethod[key.name='update'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "index"}
+    - {path: "ClassMethod[key.name='resize'] VariableDeclarator[id.name='e'] > Identifier", rename: "rect"}
+    - {path: "ClassMethod[key.name='resize'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "index"}
+    - {path: "ClassMethod[key.name='getDeviceScale'] VariableDeclarator[id.name='e'] > Identifier", rename: "rect"}
+    - {path: "ClassMethod[key.name='getDeviceScale'] VariableDeclarator[id.name='t'] > Identifier", rename: "scale"}
+
+  UIMenuButton:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "onClick"}
+    - {path: "ClassProperty[key.name='pointerUp'] ArrowFunctionExpression", rename: "pointerUp"}
+
+  GameHistory:
+    - {path: "ClassMethod[key.name='addChange'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='addChange'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='addChange'] > Identifier[name='s']", rename: "before"}
+    - {path: "ClassMethod[key.name='addChange'] > Identifier[name='o']", rename: "after"}
+    - {path: "ClassMethod[key.name='addChange'] VariableDeclarator[id.name='a'] > Identifier", rename: "now"}
+    - {path: "ClassMethod[key.name='pushState'] > Identifier[name='e']", rename: "state"}
+
+  UIUndoButton:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "onClick"}
+    - {path: "ClassMethod[key.name='constructor'] > AssignmentPattern[left.name='s'] > Identifier", rename: "isRedo"}
+    - {path: "ClassMethod[key.name='setEnabled'] > Identifier[name='e']", rename: "enabled"}
+    - {path: "ClassMethod[key.name='handleMouseDown'] > Identifier[name='e']", rename: "event"}
+    - {path: "ClassMethod[key.name='handleTouchStart'] > Identifier[name='e']", rename: "event"}
+    - {path: "ClassMethod[key.name='handleClick'] > Identifier[name='e']", rename: "event"}
+    - {path: "ClassMethod[key.name='handleTouch'] > Identifier[name='e']", rename: "event"}
+
+  Shader:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "gl"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "vertexSource"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='i']", rename: "fragmentSource"}
+    - {path: "ClassMethod[key.name='getAttribute'] > Identifier[name='e']", rename: "name"}
+    - {path: "ClassMethod[key.name='enable'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "entry"}
+    - {path: "ClassMethod[key.name='disable'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "entry"}
+    - {path: "ClassMethod[key.name='uniform1f'] > Identifier[name='e']", rename: "name"}
+    - {path: "ClassMethod[key.name='uniform1f'] > Identifier[name='t']", rename: "value"}
+    - {path: "ClassMethod[key.name='uniform1i'] > Identifier[name='e']", rename: "name"}
+    - {path: "ClassMethod[key.name='uniform1i'] > Identifier[name='t']", rename: "value"}
+    - {path: "ClassMethod[key.name='uniform2f'] > Identifier[name='e']", rename: "name"}
+    - {path: "ClassMethod[key.name='uniform2f'] > Identifier[name='t']", rename: "x"}
+    - {path: "ClassMethod[key.name='uniform2f'] > Identifier[name='s']", rename: "y"}
+    - {path: "ClassMethod[key.name='uniform3f'] > Identifier[name='e']", rename: "name"}
+    - {path: "ClassMethod[key.name='uniform3f'] > Identifier[name='t']", rename: "x"}
+    - {path: "ClassMethod[key.name='uniform3f'] > Identifier[name='s']", rename: "y"}
+    - {path: "ClassMethod[key.name='uniform3f'] > Identifier[name='i']", rename: "z"}
+    - {path: "ClassMethod[key.name='uniform4f'] > Identifier[name='e']", rename: "name"}
+    - {path: "ClassMethod[key.name='uniform4f'] > Identifier[name='t']", rename: "x"}
+    - {path: "ClassMethod[key.name='uniform4f'] > Identifier[name='s']", rename: "y"}
+    - {path: "ClassMethod[key.name='uniform4f'] > Identifier[name='i']", rename: "z"}
+    - {path: "ClassMethod[key.name='uniform4f'] > Identifier[name='o']", rename: "w"}
+    - {path: "ClassMethod[key.name='uniformMatrix3fv'] > Identifier[name='e']", rename: "name"}
+    - {path: "ClassMethod[key.name='uniformMatrix3fv'] > Identifier[name='t']", rename: "matrix"}
+    - {path: "ClassMethod[key.name='uniformMatrix4fv'] > Identifier[name='e']", rename: "name"}
+    - {path: "ClassMethod[key.name='uniformMatrix4fv'] > Identifier[name='t']", rename: "matrix"}
+    - {path: "ClassMethod[key.name='compile'] > Identifier[name='e']", rename: "vertexSource"}
+    - {path: "ClassMethod[key.name='compile'] > Identifier[name='t']", rename: "fragmentSource"}
+    - {path: "ClassMethod[key.name='compile'] VariableDeclarator[id.name='s'] > Identifier", rename: "vertexShader"}
+    - {path: "ClassMethod[key.name='compile'] VariableDeclarator[id.name='i'] > Identifier", rename: "vertexInfoLog"}
+    - {path: "ClassMethod[key.name='compile'] VariableDeclarator[id.name='o'] > Identifier", rename: "fragmentShader"}
+    - {path: "ClassMethod[key.name='compile'] VariableDeclarator[id.name='a'] > Identifier", rename: "fragmentInfoLog"}
+    - {path: "ClassMethod[key.name='compile'] VariableDeclarator[id.name='n'] > Identifier", rename: "program"}
+    - {path: "ClassMethod[key.name='initAttributes'] VariableDeclarator[id.name='e'] > Identifier", rename: "attributeCount"}
+    - {path: "ClassMethod[key.name='initAttributes'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "info"}
+    - {path: "ClassMethod[key.name='initAttributes'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "location"}
+    - {path: "ClassMethod[key.name='initAttributes'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "index"}
+    - {path: "ClassMethod[key.name='initUniforms'] VariableDeclarator[id.name='e'] > Identifier", rename: "uniformCount"}
+    - {path: "ClassMethod[key.name='initUniforms'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "info"}
+    - {path: "ClassMethod[key.name='initUniforms'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "location"}
+    - {path: "ClassMethod[key.name='initUniforms'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "index"}
+
+  UIComponent:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+
+  PlayerSettings:
+    - {path: "VariableDeclarator[id.name='s'] > Identifier[name='s']", rename: "PlayerSettings"}
+    - {path: "CallExpression > FunctionExpression > Identifier[name='e']", rename: "playerSettingsExports"}
+
+  load:
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression > Identifier[name='e']", rename: "gameMap"}
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression > Identifier[name='t']", rename: "bytes"}
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "offset"}
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression VariableDeclarator[id.name='i'] > Identifier", rename: "version"}
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "chunkCount"}
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression ForStatement VariableDeclarator[id.name='i'] > Identifier", rename: "chunkIndex"}
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression ForStatement VariableDeclarator[id.name='o'] > Identifier", rename: "chunkY"}
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression ForStatement VariableDeclarator[id.name='a'] > Identifier", rename: "typeCount"}
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression ForStatement VariableDeclarator[id.name='n'] > Identifier", rename: "chunk"}
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression ForStatement ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "typeIndex"}
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression ForStatement ForStatement VariableDeclarator[id.name='i'] > Identifier", rename: "arrowCount"}
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression ForStatement ForStatement ForStatement VariableDeclarator[id.name='o'] > Identifier", rename: "arrowIndex"}
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression ForStatement ForStatement ForStatement VariableDeclarator[id.name='i'] > Identifier", rename: "positionByte"}
+    - {path: "AssignmentExpression[left.property.name='load'] FunctionExpression ForStatement ForStatement ForStatement VariableDeclarator[id.name='a'] > Identifier", rename: "arrow"}
+
+  UIToolsToggle:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='setToggleCallback'] > Identifier[name='e']", rename: "callback"}
+    - {path: "ClassMethod[key.name='setState'] > Identifier[name='e']", rename: "state"}
+
+  Backend:
+    - {path: "FunctionDeclaration > Identifier[name='r']", rename: "isGuest"}
+    - {path: "ClassMethod[key.name='getMap'] > Identifier[name='e']", rename: "mapId"}
+    - {path: "ClassMethod[key.name='getMap'] > Identifier[name='t']", rename: "callback"}
+    - {path: "ClassMethod[key.name='getMap'] VariableDeclarator[id.name='s'] > Identifier", rename: "map"}
+    - {path: "ClassMethod[key.name='getMaps'] > Identifier[name='e']", rename: "ids"}
+    - {path: "ClassMethod[key.name='saveMap'] > Identifier[name='e']", rename: "mapInfo"}
+    - {path: "ClassMethod[key.name='saveMap'] > Identifier[name='t']", rename: "data"}
+    - {path: "ClassMethod[key.name='saveMapInfo'] > Identifier[name='e']", rename: "mapInfo"}
+    - {path: "ClassMethod[key.name='saveMapInfo'] > Identifier[name='t']", rename: "callback"}
+    - {path: "ClassMethod[key.name='createMap'] > Identifier[name='e']", rename: "callback"}
+    - {path: "ClassMethod[key.name='deleteMap'] > Identifier[name='e']", rename: "mapId"}
+    - {path: "ClassMethod[key.name='deleteMap'] > Identifier[name='t']", rename: "callback"}
+    - {path: "ClassMethod[key.name='checkUser'] > Identifier[name='e']", rename: "onLoggedIn"}
+    - {path: "ClassMethod[key.name='checkUser'] > Identifier[name='t']", rename: "onLoggedOut"}
+    - {path: "ClassMethod[key.name='checkUser'] ArrowFunctionExpression > Identifier[name='t']", rename: "userName"}
+    - {path: "ClassMethod[key.name='setName'] > Identifier[name='e']", rename: "name"}
+    - {path: "ClassMethod[key.name='completeLevel'] > Identifier[name='e']", rename: "levelId"}
+
+  ArrowDescriptions:
+    - {path: "VariableDeclarator[id.name='o'] > Identifier[name='o']", rename: "ArrowDescriptions"}
+    - {path: "CallExpression > FunctionExpression > Identifier[name='e']", rename: "arrowDescriptionsExports"}
+    - {path: "VariableDeclarator[id.name='t'] > Identifier[name='t']", rename: "arrowNames"}
+    - {path: "VariableDeclarator[id.name='s'] > Identifier[name='s']", rename: "arrowActivations"}
+    - {path: "AssignmentExpression[left.property.name='getArrowName'] FunctionExpression > Identifier[name='e']", rename: "arrowType"}
+    - {path: "AssignmentExpression[left.property.name='getArrowName'] FunctionExpression VariableDeclarator[id.name='s'] > Identifier", rename: "text"}
+    - {path: "AssignmentExpression[left.property.name='getArrowActivation'] FunctionExpression > Identifier[name='e']", rename: "arrowType"}
+    - {path: "AssignmentExpression[left.property.name='getArrowActivation'] FunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "text"}
+    - {path: "AssignmentExpression[left.property.name='getArrowAction'] FunctionExpression > Identifier[name='e']", rename: "arrowType"}
+    - {path: "AssignmentExpression[left.property.name='getArrowAction'] FunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "text"}
+
+  UIToolbarItemEmpty:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassProperty[key.name='pointerUp'] ArrowFunctionExpression", rename: "pointerUp"}
+
+  Texture:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "gl"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "image"}
+    - {path: "ClassMethod[key.name='constructor'] > AssignmentPattern[left.name='s'] > Identifier", rename: "options"}
+    - {path: "ClassMethod[key.name='constructor'] ObjectProperty[key.name='filtering'] AssignmentPattern > Identifier", rename: "filtering"}
+    - {path: "ClassMethod[key.name='constructor'] ObjectProperty[key.name='mipmaps'] AssignmentPattern > Identifier", rename: "mipmaps"}
+    - {path: "ClassMethod[key.name='constructor'] ObjectProperty[key.name='mipmapLevels'] > Identifier", rename: "mipmapLevels"}
+    - {path: "ClassMethod[key.name='constructor'] ObjectProperty[key.name='premultiplyAlpha'] AssignmentPattern > Identifier", rename: "premultiplyAlpha"}
+    - {path: "ClassMethod[key.name='load'] > Identifier[name='e']", rename: "gl"}
+    - {path: "ClassMethod[key.name='load'] > Identifier[name='t']", rename: "url"}
+    - {path: "ClassMethod[key.name='load'] > AssignmentPattern[left.name='i'] > Identifier", rename: "options"}
+    - {path: "ClassMethod[key.name='load'] ArrowFunctionExpression > Identifier[name='o']", rename: "resolve"}
+    - {path: "ClassMethod[key.name='load'] ArrowFunctionExpression > Identifier[name='a']", rename: "reject"}
+    - {path: "ClassMethod[key.name='load'] VariableDeclarator[id.name='n'] > Identifier", rename: "image"}
+    - {path: "ClassMethod[key.name='setMipmapLevels'] > Identifier[name='e']", rename: "maxLevels"}
+    - {path: "ClassMethod[key.name='getMinFiltering'] VariableDeclarator[id.name='e'] > Identifier", rename: "gl"}
+    - {path: "ClassMethod[key.name='getMagFiltering'] VariableDeclarator[id.name='e'] > Identifier", rename: "gl"}
+    - {path: "ClassMethod[key.name='init'] > Identifier[name='e']", rename: "image"}
+    - {path: "ClassMethod[key.name='init'] VariableDeclarator[id.name='t'] > Identifier", rename: "texture"}
+    - {path: "ClassMethod[key.name='init'] VariableDeclarator[id.name='s'] > Identifier", rename: "gl"}
+
+  UISpeedController:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "maxValue"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "isMobile"}
+    - {path: "ClassMethod[key.name='constructor'] > AssignmentPattern[left.name='i'] > Identifier", rename: "messageCallback"}
+    - {path: "ClassMethod[key.name='constructor'] > AssignmentPattern[left.name='o'] > Identifier", rename: "thumbStyleCallback"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='a'] > Identifier", rename: "leftLine"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='n'] > Identifier", rename: "rightLine"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='r'] > Identifier", rename: "thumbPercent"}
+    - {path: "ClassMethod[key.name='constructor'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "value"}
+    - {path: "ClassMethod[key.name='constructor'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "tickDiv"}
+    - {path: "ClassMethod[key.name='constructor'] IfStatement VariableDeclarator[id.name='e'] > Identifier", rename: "pauseAreaDiv"}
+    - {path: "ClassMethod[key.name='setValue'] > Identifier[name='e']", rename: "value"}
+    - {path: "ClassMethod[key.name='setValue'] VariableDeclarator[id.name='t'] > Identifier", rename: "usableWidth"}
+    - {path: "ClassMethod[key.name='setValue'] VariableDeclarator[id.name='s'] > Identifier", rename: "position"}
+    - {path: "ClassMethod[key.name='mouseDown'] > Identifier[name='e']", rename: "event"}
+    - {path: "ClassMethod[key.name='elementClick'] > Identifier[name='e']", rename: "event"}
+    - {path: "ClassMethod[key.name='elementClick'] VariableDeclarator[id.name='t'] > Identifier", rename: "clickX"}
+    - {path: "ClassMethod[key.name='elementClick'] VariableDeclarator[id.name='s'] > Identifier", rename: "usableWidth"}
+    - {path: "ClassMethod[key.name='elementClick'] VariableDeclarator[id.name='i'] > Identifier", rename: "ratio"}
+    - {path: "ClassProperty[key.name='mouseUp'] ArrowFunctionExpression", rename: "mouseUp"}
+    - {path: "ClassProperty[key.name='mouseMove'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassProperty[key.name='mouseMove'] VariableDeclarator[id.name='t'] > Identifier", rename: "moveX"}
+    - {path: "ClassProperty[key.name='mouseMove'] VariableDeclarator[id.name='s'] > Identifier", rename: "usableWidth"}
+    - {path: "ClassProperty[key.name='mouseMove'] VariableDeclarator[id.name='i'] > Identifier", rename: "ratio"}
+
+  Render:
+    - {path: "VariableDeclarator[id.name='o'] > Identifier[name='o']", rename: "quadPositions"}
+    - {path: "VariableDeclarator[id.name='a'] > Identifier[name='a']", rename: "quadIndices"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "canvas"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='t'] > Identifier", rename: "gl"}
+    - {path: "ClassMethod[key.name='clear'] > Identifier[name='e']", rename: "r"}
+    - {path: "ClassMethod[key.name='clear'] > Identifier[name='t']", rename: "g"}
+    - {path: "ClassMethod[key.name='clear'] > Identifier[name='s']", rename: "b"}
+    - {path: "ClassMethod[key.name='clear'] > Identifier[name='i']", rename: "a"}
+    - {path: "ClassMethod[key.name='compileShader'] > Identifier[name='e']", rename: "vertexSource"}
+    - {path: "ClassMethod[key.name='compileShader'] > Identifier[name='t']", rename: "fragmentSource"}
+    - {path: "ClassMethod[key.name='compileShader'] VariableDeclarator[id.name='s'] > Identifier", rename: "shader"}
+    - {path: "ClassMethod[key.name='setShader'] > Identifier[name='e']", rename: "shader"}
+    - {path: "ClassMethod[key.name='setBlendMode'] > Identifier[name='e']", rename: "mode"}
+    - {path: "ClassMethod[key.name='setTexture'] > Identifier[name='e']", rename: "texture"}
+    - {path: "ClassMethod[key.name='setRenderTarget'] > Identifier[name='e']", rename: "target"}
+    - {path: "ClassMethod[key.name='setRenderTarget'] VariableDeclarator[id.name='t'] > Identifier", rename: "framebuffer"}
+    - {path: "ClassMethod[key.name='setQuadBuffers'] > Identifier[name='e']", rename: "shader"}
+
+  I18nText:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "en"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "ru"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "ua"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='i']", rename: "by"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='o']", rename: "fr"}
+    - {path: "ClassMethod[key.name='get'] RestElement > Identifier[name='e']", rename: "args"}
+
+  PlayerClipboardController:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "game"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "arrowActions"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "getPlayerAccess"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='i']", rename: "history"}
+    - {path: "ClassMethod[key.name='constructor'] AssignmentExpression[left.property.name='pasteEvent'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassMethod[key.name='constructor'] AssignmentExpression[left.property.name='pasteEvent'] ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "text"}
+    - {path: "ClassMethod[key.name='constructor'] AssignmentExpression[left.property.name='copyEvent'] ArrowFunctionExpression > Identifier[name='e']", rename: "event"}
+    - {path: "ClassMethod[key.name='constructor'] AssignmentExpression[left.property.name='copyEvent'] ArrowFunctionExpression VariableDeclarator[id.name='t'] > Identifier", rename: "data"}
+    - {path: "ClassMethod[key.name='copyArrows'] VariableDeclarator[id.name='e'] > Identifier", rename: "data"}
+    - {path: "ClassMethod[key.name='checkClipboardData'] VariableDeclarator[id.name='e'] > Identifier", rename: "cached"}
+    - {path: "ClassMethod[key.name='pasteArrows'] VariableDeclarator[id.name='e'] > Identifier", rename: "clipboardText"}
+    - {path: "ClassMethod[key.name='pasteArrows'] VariableDeclarator[id.name='t'] > Identifier", rename: "cached"}
+    - {path: "ClassMethod[key.name='pasteArrows'] IfStatement VariableDeclarator[id.name='s'] > Identifier", rename: "data"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='e'] > Identifier", rename: "centerX"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='t'] > Identifier", rename: "centerY"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='s'] > Identifier", rename: "cursorX"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='a'] > Identifier", rename: "cursorY"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='n'] > Identifier", rename: "pivotX"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='l'] > Identifier", rename: "pivotY"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='h'] > Identifier", rename: "copiedArrows"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='c'] > Identifier", rename: "minX"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='d'] > Identifier", rename: "minY"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='g'] > Identifier", rename: "maxX"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='m'] > Identifier", rename: "maxY"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='p'] > Identifier", rename: "rotation"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='w'] > Identifier", rename: "pivotW"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='v'] > Identifier", rename: "pivotH"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='A'] > Identifier", rename: "offsetCenterX"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] VariableDeclarator[id.name='f'] > Identifier", rename: "offsetCenterY"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='e']", rename: "arrowData"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='t']", rename: "key"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='s']", rename: "relX"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='o']", rename: "relY"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='a'] > Identifier", rename: "destX"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='h'] > Identifier", rename: "destY"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='c'] > Identifier", rename: "before"}
+    - {path: "ClassMethod[key.name='commitPastedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='d'] > Identifier", rename: "after"}
+
+  OverlayText:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "text"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "x"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "y"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='i']", rename: "width"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='o']", rename: "height"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='a']", rename: "textSize"}
+    - {path: "ClassMethod[key.name='add'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='update'] > Identifier[name='e']", rename: "offset"}
+    - {path: "ClassMethod[key.name='update'] > Identifier[name='t']", rename: "scale"}
+    - {path: "ClassMethod[key.name='update'] > AssignmentPattern[left.name='s'] > Identifier", rename: "devicePixelRatio"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='o'] > Identifier", rename: "cellPx"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='a'] > Identifier", rename: "padding"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='n'] > Identifier", rename: "left"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='r'] > Identifier", rename: "top"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='l'] > Identifier", rename: "width"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='h'] > Identifier", rename: "height"}
+    - {path: "ClassMethod[key.name='update'] VariableDeclarator[id.name='c'] > Identifier", rename: "fontSize"}
+
+  SelectedMap:
+    - {path: "ClassMethod[key.name='select'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='select'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='deselect'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='deselect'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] > Identifier[name='e']", rename: "gameMap"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] > Identifier[name='t']", rename: "cursorX"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] > Identifier[name='s']", rename: "cursorY"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] > Identifier[name='i']", rename: "mode"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] VariableDeclarator[id.name='o'] > Identifier", rename: "firstX"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] VariableDeclarator[id.name='a'] > Identifier", rename: "firstY"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] VariableDeclarator[id.name='n'] > Identifier", rename: "secondX"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] VariableDeclarator[id.name='r'] > Identifier", rename: "secondY"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] VariableDeclarator[id.name='l'] > Identifier", rename: "floorFirstX"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] VariableDeclarator[id.name='h'] > Identifier", rename: "floorFirstY"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] VariableDeclarator[id.name='c'] > Identifier", rename: "floorSecondX"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] VariableDeclarator[id.name='d'] > Identifier", rename: "floorSecondY"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] IfStatement VariableDeclarator[id.name='t'] > Identifier", rename: "minX"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] IfStatement VariableDeclarator[id.name='s'] > Identifier", rename: "minY"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] IfStatement VariableDeclarator[id.name='o'] > Identifier", rename: "maxX"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] IfStatement VariableDeclarator[id.name='a'] > Identifier", rename: "maxY"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] IfStatement ForStatement VariableDeclarator[id.name='n'] > Identifier", rename: "x"}
+    - {path: "ClassMethod[key.name='updateMouseSelection'] IfStatement ForStatement ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "y"}
+    - {path: "ClassMethod[key.name='setArrow'] > Identifier[name='e']", rename: "arrowType"}
+    - {path: "ClassMethod[key.name='setArrow'] VariableDeclarator[id.name='t'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='copyFromGameMap'] > Identifier[name='e']", rename: "gameMap"}
+    - {path: "ClassMethod[key.name='copyFromGameMap'] VariableDeclarator[id.name='t'] > Identifier", rename: "minX"}
+    - {path: "ClassMethod[key.name='copyFromGameMap'] VariableDeclarator[id.name='s'] > Identifier", rename: "minY"}
+    - {path: "ClassMethod[key.name='copyFromGameMap'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='i']", rename: "key"}
+    - {path: "ClassMethod[key.name='copyFromGameMap'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='o']", rename: "relX"}
+    - {path: "ClassMethod[key.name='copyFromGameMap'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='a']", rename: "relY"}
+    - {path: "ClassMethod[key.name='copyFromGameMap'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='l'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='copyFromGameMap'] VariableDeclarator[id.name='i']", rename: "savedBytes"}
+    - {path: "ClassMethod[key.name='pasteFromText'] > Identifier[name='e']", rename: "text"}
+    - {path: "ClassMethod[key.name='pasteFromText'] > Identifier[name='t']", rename: "onSuccess"}
+    - {path: "ClassMethod[key.name='pasteFromText'] > Identifier[name='s']", rename: "onError"}
+    - {path: "ClassMethod[key.name='pasteFromText'] TryStatement VariableDeclarator[id.name='s'] > Identifier", rename: "bytes"}
+    - {path: "ClassMethod[key.name='pasteFromText'] CatchClause[param.name='e']", rename: "error"}
+    - {path: "ClassMethod[key.name='pasteFromText'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='e']", rename: "chunk"}
+    - {path: "ClassMethod[key.name='pasteFromText'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "cellX"}
+    - {path: "ClassMethod[key.name='pasteFromText'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "cellY"}
+    - {path: "ClassMethod[key.name='pasteFromText'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ForStatement VariableDeclarator[id.name='i'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='pasteFromText'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ForStatement VariableDeclarator[id.name='o'] > Identifier", rename: "absX"}
+    - {path: "ClassMethod[key.name='pasteFromText'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ForStatement VariableDeclarator[id.name='a'] > Identifier", rename: "absY"}
+    - {path: "ClassMethod[key.name='rotateOrFlipArrows'] > Identifier[name='e']", rename: "rotation"}
+    - {path: "ClassMethod[key.name='rotateOrFlipArrows'] > Identifier[name='t']", rename: "flip"}
+    - {path: "ClassMethod[key.name='rotateOrFlipArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='e']", rename: "arrow"}
+    - {path: "ClassMethod[key.name='rotateOrFlipArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='t']", rename: "key"}
+    - {path: "ClassMethod[key.name='rotateOrFlipArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='s']", rename: "x"}
+    - {path: "ClassMethod[key.name='rotateOrFlipArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='i']", rename: "y"}
+    - {path: "ClassMethod[key.name='rotateOrFlipArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "newArrow"}
+    - {path: "ClassMethod[key.name='rotateOrFlipArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='a'] > Identifier", rename: "rotation"}
+    - {path: "ClassMethod[key.name='rotateOrFlipArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='r'] > Identifier", rename: "newX"}
+    - {path: "ClassMethod[key.name='rotateOrFlipArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='l'] > Identifier", rename: "newY"}
+    - {path: "ClassMethod[key.name='dispose'] CallExpression[callee.property.name='clear']", rename: "clearMethod"}
+
+  LevelOverlayInfo:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "width"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='i']", rename: "height"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='o']", rename: "outputs"}
+
+  UIOkCancel:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "parent"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "message"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "okText"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='o']", rename: "onOk"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='a'] > Identifier", rename: "panelDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='n'] > Identifier", rename: "messageDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='r'] > Identifier", rename: "bottomDiv"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='l'] > Identifier", rename: "okButton"}
+    - {path: "ClassMethod[key.name='constructor'] VariableDeclarator[id.name='h'] > Identifier", rename: "cancelButton"}
+
+  PlayerArrowActions:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "game"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "playerUI"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='s']", rename: "history"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='i']", rename: "getPlayerAccess"}
+    - {path: "ClassMethod[key.name='takeArrow'] > Identifier[name='e']", rename: "arrowType"}
+    - {path: "ClassMethod[key.name='selectArrows'] > Identifier[name='e']", rename: "cursorX"}
+    - {path: "ClassMethod[key.name='selectArrows'] > Identifier[name='t']", rename: "cursorY"}
+    - {path: "ClassMethod[key.name='selectArrows'] > Identifier[name='s']", rename: "shiftPressed"}
+    - {path: "ClassMethod[key.name='selectArrows'] > Identifier[name='i']", rename: "ctrlPressed"}
+    - {path: "ClassMethod[key.name='selectArrows'] VariableDeclarator[id.name='o'] > Identifier", rename: "mode"}
+    - {path: "ClassMethod[key.name='setArrows'] > Identifier[name='e']", rename: "cellX"}
+    - {path: "ClassMethod[key.name='setArrows'] > Identifier[name='t']", rename: "cellY"}
+    - {path: "ClassMethod[key.name='setArrows'] VariableDeclarator[id.name='s'] > Identifier", rename: "pivot"}
+    - {path: "ClassMethod[key.name='setArrows'] VariableDeclarator[id.name='a'] > Identifier", rename: "copiedArrows"}
+    - {path: "ClassMethod[key.name='setArrows'] VariableDeclarator[id.name='n'] > Identifier", rename: "minX"}
+    - {path: "ClassMethod[key.name='setArrows'] VariableDeclarator[id.name='r'] > Identifier", rename: "minY"}
+    - {path: "ClassMethod[key.name='setArrows'] VariableDeclarator[id.name='l'] > Identifier", rename: "maxX"}
+    - {path: "ClassMethod[key.name='setArrows'] VariableDeclarator[id.name='h'] > Identifier", rename: "maxY"}
+    - {path: "ClassMethod[key.name='setArrows'] VariableDeclarator[id.name='c'] > Identifier", rename: "rotation"}
+    - {path: "ClassMethod[key.name='setArrows'] VariableDeclarator[id.name='d'] > Identifier", rename: "pivotW"}
+    - {path: "ClassMethod[key.name='setArrows'] VariableDeclarator[id.name='u'] > Identifier", rename: "pivotH"}
+    - {path: "ClassMethod[key.name='setArrows'] VariableDeclarator[id.name='g'] > Identifier", rename: "offsetX"}
+    - {path: "ClassMethod[key.name='setArrows'] VariableDeclarator[id.name='m'] > Identifier", rename: "offsetY"}
+    - {path: "ClassMethod[key.name='setArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='s']", rename: "arrowData"}
+    - {path: "ClassMethod[key.name='setArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='a']", rename: "key"}
+    - {path: "ClassMethod[key.name='setArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='n']", rename: "relX"}
+    - {path: "ClassMethod[key.name='setArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='r']", rename: "relY"}
+    - {path: "ClassMethod[key.name='setArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='l'] > Identifier", rename: "destX"}
+    - {path: "ClassMethod[key.name='setArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='h'] > Identifier", rename: "destY"}
+    - {path: "ClassMethod[key.name='setArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='c'] > Identifier", rename: "before"}
+    - {path: "ClassMethod[key.name='setArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='d'] > Identifier", rename: "after"}
+    - {path: "ClassMethod[key.name='setPath'] > Identifier[name='e']", rename: "cursorX"}
+    - {path: "ClassMethod[key.name='setPath'] > Identifier[name='t']", rename: "cursorY"}
+    - {path: "ClassMethod[key.name='setPath'] VariableDeclarator[id.name='s'] > Identifier", rename: "cellX"}
+    - {path: "ClassMethod[key.name='setPath'] VariableDeclarator[id.name='i'] > Identifier", rename: "cellY"}
+    - {path: "ClassMethod[key.name='setPath'] IfStatement BlockStatement VariableDeclarator[id.name='o'] > Identifier", rename: "deltaX"}
+    - {path: "ClassMethod[key.name='setPath'] IfStatement BlockStatement VariableDeclarator[id.name='a'] > Identifier", rename: "deltaY"}
+    - {path: "ClassMethod[key.name='setPath'] IfStatement BlockStatement VariableDeclarator[id.name='n'] > Identifier", rename: "startCellX"}
+    - {path: "ClassMethod[key.name='setPath'] IfStatement BlockStatement VariableDeclarator[id.name='r'] > Identifier", rename: "startCellY"}
+    - {path: "ClassMethod[key.name='setPath'] IfStatement BlockStatement VariableDeclarator[id.name='l'] > Identifier", rename: "dragStarted"}
+    - {path: "ClassMethod[key.name='setPath'] BlockStatement VariableDeclarator[id.name='h'] > Identifier", rename: "lineX"}
+    - {path: "ClassMethod[key.name='setPath'] BlockStatement VariableDeclarator[id.name='c'] > Identifier", rename: "lineY"}
+    - {path: "ClassMethod[key.name='deleteArrow'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='deleteArrow'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='deleteArrow'] VariableDeclarator[id.name='s'] > Identifier", rename: "before"}
+    - {path: "ClassMethod[key.name='deleteArrow'] VariableDeclarator[id.name='o'] > Identifier", rename: "after"}
+    - {path: "ClassMethod[key.name='deleteSelectedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='e']", rename: "key"}
+    - {path: "ClassMethod[key.name='deleteSelectedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='t']", rename: "x"}
+    - {path: "ClassMethod[key.name='deleteSelectedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='s']", rename: "y"}
+    - {path: "ClassMethod[key.name='deleteSelectedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='o'] > Identifier", rename: "before"}
+    - {path: "ClassMethod[key.name='deleteSelectedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='a'] > Identifier", rename: "after"}
+    - {path: "ClassMethod[key.name='rotateArrow'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='rotateArrow'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='rotateArrow'] > Identifier[name='s']", rename: "rotation"}
+    - {path: "ClassMethod[key.name='rotateArrow'] VariableDeclarator[id.name='o'] > Identifier", rename: "before"}
+    - {path: "ClassMethod[key.name='rotateArrow'] VariableDeclarator[id.name='a'] > Identifier", rename: "after"}
+    - {path: "ClassMethod[key.name='rotateArrowByTool'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='rotateArrowByTool'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='rotateArrowByTool'] > Identifier[name='s']", rename: "step"}
+    - {path: "ClassMethod[key.name='rotateArrowByTool'] VariableDeclarator[id.name='o'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='rotateArrowByTool'] VariableDeclarator[id.name='a'] > Identifier", rename: "before"}
+    - {path: "ClassMethod[key.name='rotateArrowByTool'] VariableDeclarator[id.name='n'] > Identifier", rename: "newRotation"}
+    - {path: "ClassMethod[key.name='rotateArrowByTool'] VariableDeclarator[id.name='r'] > Identifier", rename: "after"}
+    - {path: "ClassMethod[key.name='flipArrow'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='flipArrow'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='flipArrow'] VariableDeclarator[id.name='s'] > Identifier", rename: "before"}
+    - {path: "ClassMethod[key.name='flipArrow'] VariableDeclarator[id.name='o'] > Identifier", rename: "after"}
+    - {path: "ClassMethod[key.name='flipArrowByTool'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='flipArrowByTool'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='flipArrowByTool'] VariableDeclarator[id.name='s'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='flipArrowByTool'] VariableDeclarator[id.name='o'] > Identifier", rename: "before"}
+    - {path: "ClassMethod[key.name='flipArrowByTool'] VariableDeclarator[id.name='a'] > Identifier", rename: "after"}
+    - {path: "ClassMethod[key.name='updateFlipDirection'] > Identifier[name='e']", rename: "arrow"}
+    
+    - {path: "ClassMethod[key.name='handleRotationTool'] > Identifier[name='e']", rename: "cellX"}
+    - {path: "ClassMethod[key.name='handleRotationTool'] > Identifier[name='t']", rename: "cellY"}
+    - {path: "ClassMethod[key.name='handleRotationTool'] > Identifier[name='s']", rename: "cursorX"}
+    - {path: "ClassMethod[key.name='handleRotationTool'] > Identifier[name='o']", rename: "cursorY"}
+    - {path: "ClassMethod[key.name='handleRotationTool'] IfStatement BlockStatement VariableDeclarator[id.name='e'] > Identifier", rename: "dx"}
+    - {path: "ClassMethod[key.name='handleRotationTool'] IfStatement BlockStatement VariableDeclarator[id.name='t'] > Identifier", rename: "dy"}
+    - {path: "ClassMethod[key.name='handleRotationTool'] VariableDeclarator[id.name='s'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='handleRotationTool'] IfStatement BlockStatement VariableDeclarator[id.name='o'] > Identifier", rename: "newRotation"}
+    - {path: "ClassMethod[key.name='handleRotationTool'] IfStatement BlockStatement VariableDeclarator[id.name='a'] > Identifier", rename: "angleDeg"}
+    - {path: "ClassMethod[key.name='handleRotationTool'] IfStatement BlockStatement IfStatement BlockStatement VariableDeclarator[id.name='e'] > Identifier", rename: "before"}
+    - {path: "ClassMethod[key.name='handleRotationTool'] IfStatement BlockStatement IfStatement BlockStatement VariableDeclarator[id.name='t'] > Identifier", rename: "arrowX"}
+    - {path: "ClassMethod[key.name='handleRotationTool'] IfStatement BlockStatement IfStatement BlockStatement VariableDeclarator[id.name='a'] > Identifier", rename: "arrowY"}
+    - {path: "ClassMethod[key.name='handleRotationTool'] IfStatement BlockStatement IfStatement BlockStatement VariableDeclarator[id.name='n'] > Identifier", rename: "after"}
+    - {path: "ClassMethod[key.name='handleRotationTool'] IfStatement IfStatement VariableDeclarator[id.name='s'] > Identifier", rename: "arrow"}
+
+    - {path: "ClassMethod[key.name='handleDeleteTool'] > Identifier[name='e']", rename: "cellX"}
+    - {path: "ClassMethod[key.name='handleDeleteTool'] > Identifier[name='t']", rename: "cellY"}
+    - {path: "ClassMethod[key.name='setLine'] > Identifier[name='e']", rename: "arrowType"}
+    - {path: "ClassMethod[key.name='setLine'] > Identifier[name='t']", rename: "startX"}
+    - {path: "ClassMethod[key.name='setLine'] > Identifier[name='s']", rename: "startY"}
+    - {path: "ClassMethod[key.name='setLine'] > Identifier[name='o']", rename: "endX"}
+    - {path: "ClassMethod[key.name='setLine'] > Identifier[name='a']", rename: "endY"}
+    - {path: "ClassMethod[key.name='setLine'] > AssignmentPattern[left.name='n'] > Identifier", rename: "recordHistory"}
+    - {path: "ClassMethod[key.name='setLine'] VariableDeclarator[id.name='r'] > Identifier", rename: "axis"}
+    - {path: "ClassMethod[key.name='setLine'] VariableDeclarator[id.name='l'] > Identifier", rename: "length"}
+    - {path: "ClassMethod[key.name='setLine'] VariableDeclarator[id.name='h'] > Identifier", rename: "x"}
+    - {path: "ClassMethod[key.name='setLine'] VariableDeclarator[id.name='c'] > Identifier", rename: "y"}
+    - {path: "ClassMethod[key.name='setLine'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "index"}
+    - {path: "ClassMethod[key.name='setLine'] ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "after"}
+
+  Chunk:
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='constructor'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "cellX"}
+    - {path: "ClassMethod[key.name='constructor'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "cellY"}
+    - {path: "ClassMethod[key.name='getArrow'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='getArrow'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='getArrowByIndex'] > Identifier[name='e']", rename: "index"}
+    - {path: "ClassMethod[key.name='removeArrow'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='removeArrow'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='getLevelArrow'] > Identifier[name='e']", rename: "x"}
+    - {path: "ClassMethod[key.name='getLevelArrow'] > Identifier[name='t']", rename: "y"}
+    - {path: "ClassMethod[key.name='isEmpty'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "cellX"}
+    - {path: "ClassMethod[key.name='isEmpty'] ForStatement ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "cellY"}
+    - {path: "ClassMethod[key.name='getArrowTypes'] VariableDeclarator[id.name='e'] > Identifier", rename: "types"}
+    - {path: "ClassMethod[key.name='getArrowTypes'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "cellX"}
+    - {path: "ClassMethod[key.name='getArrowTypes'] ForStatement ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "cellY"}
+    - {path: "ClassMethod[key.name='getArrowTypes'] ForStatement ForStatement VariableDeclarator[id.name='i'] > Identifier", rename: "type"}
+    - {path: "ClassMethod[key.name='clear'] ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "cellX"}
+    - {path: "ClassMethod[key.name='clear'] ForStatement ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "cellY"}
+
+  Game:
+    - {path: "VariableDeclarator[id.name='c'] > Identifier[name='c']", rename: "pivotPoints"}
+    - {path: "VariableDeclarator[id.name='d'] > Identifier[name='d']", rename: "spriteCellSize"}
+    - {path: "VariableDeclarator[id.name='u'] > Identifier[name='u']", rename: "quadCorners"}
+    - {path: "ClassMethod[key.name='constructor'] > Identifier[name='e']", rename: "canvas"}
+    - {path: "ClassMethod[key.name='draw'] VariableDeclarator[id.name='e'] > Identifier", rename: "render"}
+    - {path: "ClassMethod[key.name='draw'] VariableDeclarator[id.name='t'] > Identifier", rename: "scale"}
+    - {path: "ClassMethod[key.name='draw'] VariableDeclarator[id.name='s'] > Identifier", rename: "startChunkX"}
+    - {path: "ClassMethod[key.name='draw'] VariableDeclarator[id.name='i'] > Identifier", rename: "startChunkY"}
+    - {path: "ClassMethod[key.name='draw'] VariableDeclarator[id.name='a'] > Identifier", rename: "endChunkX"}
+    - {path: "ClassMethod[key.name='draw'] VariableDeclarator[id.name='n'] > Identifier", rename: "endChunkY"}
+    - {path: "ClassMethod[key.name='draw'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='t']", rename: "chunk"}
+    - {path: "ClassMethod[key.name='draw'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='o']", rename: "key"}
+    - {path: "ClassMethod[key.name='draw'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='r'] > Identifier", rename: "needsUpdate"}
+    - {path: "ClassMethod[key.name='draw'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression IfStatement BlockStatement VariableDeclarator[id.name='s'] > Identifier", rename: "meshData"}
+    - {path: "ClassMethod[key.name='draw'] CallExpression[callee.property.name='forEach'] > ArrowFunctionExpression[params.length=1] > Identifier[name='t']", rename: "key"}
+    - {path: "ClassMethod[key.name='draw'] IfStatement VariableDeclarator[id.name='t'] > Identifier", rename: "selectionArea"}
+    - {path: "ClassMethod[key.name='draw'] IfStatement BlockStatement VariableDeclarator[id.name='s'] > Identifier", rename: "selectionX"}
+    - {path: "ClassMethod[key.name='draw'] IfStatement BlockStatement VariableDeclarator[id.name='i'] > Identifier", rename: "selectionY"}
+    - {path: "ClassMethod[key.name='draw'] IfStatement BlockStatement VariableDeclarator[id.name='a'] > Identifier", rename: "selectionW"}
+    - {path: "ClassMethod[key.name='draw'] IfStatement BlockStatement VariableDeclarator[id.name='n'] > Identifier", rename: "selectionH"}
+    - {path: "ClassMethod[key.name='updateFrame'] > AssignmentPattern[left.name='e'] > Identifier", rename: "onTick"}
+    - {path: "ClassMethod[key.name='updateFrame'] ForStatement VariableDeclarator[id.name='t'] > Identifier", rename: "subTick"}
+    - {path: "ClassMethod[key.name='updateTick'] > AssignmentPattern[left.name='e'] > Identifier", rename: "onTick"}
+    - {path: "ClassMethod[key.name='undoChanges'] > Identifier[name='e']", rename: "mapAction"}
+    - {path: "ClassMethod[key.name='undoChanges'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='e']", rename: "before"}
+    - {path: "ClassMethod[key.name='undoChanges'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='t']", rename: "after"}
+    - {path: "ClassMethod[key.name='undoChanges'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier:nth-child(2)", rename: "key"}
+    - {path: "ClassMethod[key.name='undoChanges'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='i']", rename: "x"}
+    - {path: "ClassMethod[key.name='undoChanges'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='o']", rename: "y"}
+    - {path: "ClassMethod[key.name='redoChanges'] > Identifier[name='e']", rename: "mapAction"}
+    - {path: "ClassMethod[key.name='redoChanges'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='e']", rename: "before"}
+    - {path: "ClassMethod[key.name='redoChanges'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='t']", rename: "after"}
+    - {path: "ClassMethod[key.name='redoChanges'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier:nth-child(2)", rename: "key"}
+    - {path: "ClassMethod[key.name='redoChanges'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='i']", rename: "x"}
+    - {path: "ClassMethod[key.name='redoChanges'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='o']", rename: "y"}
+    - {path: "ClassMethod[key.name='focusOnBox'] > Identifier[name='e']", rename: "x1"}
+    - {path: "ClassMethod[key.name='focusOnBox'] > Identifier[name='t']", rename: "y1"}
+    - {path: "ClassMethod[key.name='focusOnBox'] > Identifier[name='s']", rename: "x2"}
+    - {path: "ClassMethod[key.name='focusOnBox'] > Identifier[name='i']", rename: "y2"}
+    - {path: "ClassMethod[key.name='focusOnBox'] > AssignmentPattern[left.name='a'] > Identifier", rename: "padding"}
+    - {path: "ClassMethod[key.name='focusOnBox'] > AssignmentPattern[left.name='n'] > Identifier", rename: "speed"}
+    - {path: "ClassMethod[key.name='focusOnBox'] VariableDeclarator[id.name='r'] > Identifier", rename: "boxWidth"}
+    - {path: "ClassMethod[key.name='focusOnBox'] VariableDeclarator[id.name='l'] > Identifier", rename: "boxHeight"}
+    - {path: "ClassMethod[key.name='focusOnBox'] VariableDeclarator[id.name='h'] > Identifier", rename: "targetScale"}
+    - {path: "ClassMethod[key.name='focusOnBox'] VariableDeclarator[id.name='c'] > Identifier", rename: "centerX"}
+    - {path: "ClassMethod[key.name='focusOnBox'] VariableDeclarator[id.name='d'] > Identifier", rename: "centerY"}
+    - {path: "ClassMethod[key.name='updateFocus'] VariableDeclarator[id.name='e'] > Identifier", rename: "progress"}
+    - {path: "ClassMethod[key.name='setScale'] > Identifier[name='e']", rename: "scale"}
+    - {path: "ClassMethod[key.name='setScale'] > Identifier[name='t']", rename: "center"}
+    - {path: "ClassMethod[key.name='setScale'] VariableDeclarator[id.name='s'] > Identifier", rename: "worldXBefore"}
+    - {path: "ClassMethod[key.name='setScale'] VariableDeclarator[id.name='i'] > Identifier", rename: "worldYBefore"}
+    - {path: "ClassMethod[key.name='resize'] > Identifier[name='e']", rename: "width"}
+    - {path: "ClassMethod[key.name='resize'] > Identifier[name='t']", rename: "height"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] > Identifier[name='e']", rename: "chunk"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] VariableDeclarator[id.name='t'] > Identifier", rename: "vertices"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] VariableDeclarator[id.name='s'] > Identifier", rename: "indices"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] VariableDeclarator[id.name='i'] > Identifier", rename: "vertexIndex"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] VariableDeclarator[id.name='a'] > Identifier", rename: "chunkX"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] VariableDeclarator[id.name='n'] > Identifier", rename: "chunkY"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement VariableDeclarator[id.name='r'] > Identifier", rename: "cellX"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement VariableDeclarator[id.name='l'] > Identifier", rename: "cellY"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement VariableDeclarator[id.name='o'] > Identifier", rename: "arrow"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement VariableDeclarator[id.name='h'] > Identifier", rename: "arrowType"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement VariableDeclarator[id.name='c'] > Identifier", rename: "spriteIndex"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement VariableDeclarator[id.name='g'] > Identifier", rename: "spriteU"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement VariableDeclarator[id.name='m'] > Identifier", rename: "spriteV"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement VariableDeclarator[id.name='p'] > Identifier", rename: "rotation"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement VariableDeclarator[id.name='w'] > Identifier", rename: "signal"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement VariableDeclarator[id.name='v'] > Identifier", rename: "x"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement VariableDeclarator[id.name='A'] > Identifier", rename: "y"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement ForStatement VariableDeclarator[id.name='e'] > Identifier", rename: "cornerIndex"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement ForStatement VariableDeclarator[id.name='s'] > Identifier", rename: "corner"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement ForStatement VariableDeclarator[id.name='i'] > Identifier", rename: "u"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement ForStatement VariableDeclarator[id.name='a'] > Identifier", rename: "v"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement ForStatement VariableDeclarator[id.name='n'] > Identifier", rename: "px"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement ForStatement VariableDeclarator[id.name='r'] > Identifier", rename: "py"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement ForStatement VariableDeclarator[id.name='l'] > Identifier", rename: "tu"}
+    - {path: "ClassMethod[key.name='buildChunkMesh'] ForStatement ForStatement VariableDeclarator[id.name='h'] > Identifier", rename: "tv"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='e'] > Identifier", rename: "render"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='t'] > Identifier", rename: "pivot"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='s'] > Identifier", rename: "alpha"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='i'] > Identifier", rename: "copiedArrows"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='a'] > Identifier", rename: "minX"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='n'] > Identifier", rename: "minY"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='r'] > Identifier", rename: "maxX"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='h'] > Identifier", rename: "maxY"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='c'] > Identifier", rename: "rotation"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='d'] > Identifier", rename: "pivotW"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='u'] > Identifier", rename: "pivotH"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='g'] > Identifier", rename: "offsetCenterX"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='m'] > Identifier", rename: "offsetCenterY"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='p'] > Identifier", rename: "baseX"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] VariableDeclarator[id.name='w'] > Identifier", rename: "baseY"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] IfStatement VariableDeclarator[id.name='e'] > Identifier", rename: "centerXPx"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] IfStatement VariableDeclarator[id.name='t'] > Identifier", rename: "centerYPx"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='t']", rename: "arrowData"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression > Identifier[name='s']", rename: "key"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='i']", rename: "relX"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression ArrayPattern > Identifier[name='a']", rename: "relY"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='n'] > Identifier", rename: "drawX"}
+    - {path: "ClassMethod[key.name='drawSelectedArrows'] CallExpression[callee.property.name='forEach'] ArrowFunctionExpression VariableDeclarator[id.name='r'] > Identifier", rename: "drawY"}
